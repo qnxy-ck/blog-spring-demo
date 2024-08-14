@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: blog-spring-demo
+  profiles:
+    active: dev
