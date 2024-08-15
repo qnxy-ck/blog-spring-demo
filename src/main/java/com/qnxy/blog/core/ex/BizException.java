@@ -9,9 +9,13 @@ public class BizException extends RuntimeException {
 
     private final Object _status;
 
-    public <STATUS extends Enum<STATUS> & ResultStatusCode> BizException(STATUS status, Object... args) {
-        super(status.getFullMessage(args));
+    public <STATUS extends Enum<STATUS> & ResultStatusCode> BizException(Exception e, STATUS status, Object... args) {
+        super(status.getFullMessage(args), e);
         this._status = status;
+    }
+
+    public <STATUS extends Enum<STATUS> & ResultStatusCode> BizException(STATUS status, Object... args) {
+        this(null, status, args);
     }
 
     public <STATUS extends Enum<STATUS> & ResultStatusCode> STATUS getStatus() {

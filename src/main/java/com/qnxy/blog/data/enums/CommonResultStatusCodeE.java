@@ -13,12 +13,10 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum CommonResultStatusCodeE implements ResultStatusCode {
 
-    STACK_INFO("-1", "{0}"),
     SUCCESSFUL("C00001", "成功"),
     FAILED("C00002", "失败"),
     UNKNOWN_EXCEPTION("C00003", "系统未知错误"),
-    
-    Test("C0004", "你好: {0}")
+    JSON_CONVERSION_EXCEPTION("C00004", "Json转换异常"),
 
 
     ;

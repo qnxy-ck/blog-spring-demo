@@ -41,22 +41,26 @@ public class R<DATA> {
      * 需要开启 发送异常栈信息开关
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private final String errorStackTrace;
+    private final String exStackTrace;
 
 
-    private R(DATA data, String statusCode, String statusMsg, String errorStackTrace) {
+    private R(DATA data, String statusCode, String statusMsg, String exStackTrace) {
         this.data = data;
         this.statusCode = statusCode;
         this.statusMsg = statusMsg;
-        this.errorStackTrace = errorStackTrace;
+        this.exStackTrace = exStackTrace;
     }
 
     public static <DATA, STATUS extends Enum<STATUS> & ResultStatusCode> R<DATA> result(DATA data, STATUS status, Object... args) {
         return new R<>(data, status.getCode(), status.getFullMessage(args), null);
     }
 
-    public static <DATA> R<DATA> ofBizEx(DATA data, BizException e) {
-        return new R<>(data, e.getStatus().getCode(), e.getMessage(), null);
+    public static <DATA> R<DATA> ofBizEx(BizException e, String exStackTrace) {
+        return new R<>(null, e.getStatus().getCode(), e.getMessage(), exStackTrace);
+    }
+
+    public static <DATA, STATUS extends Enum<STATUS> & ResultStatusCode> R<DATA> exStackTrace(STATUS status, String exStackTrace, Object... args) {
+        return new R<>(null, status.getCode(), status.getFullMessage(args), exStackTrace);
     }
 
     public static <DATA> R<DATA> suc(DATA data) {

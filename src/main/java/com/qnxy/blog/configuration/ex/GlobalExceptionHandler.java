@@ -2,7 +2,6 @@ package com.qnxy.blog.configuration.ex;
 
 import com.qnxy.blog.core.ex.BizException;
 import com.qnxy.blog.data.R;
-import com.qnxy.blog.data.enums.CommonResultStatusCodeE;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +12,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+
+import static com.qnxy.blog.data.enums.CommonResultStatusCodeE.UNKNOWN_EXCEPTION;
 
 /**
  * @author Qnxy
@@ -37,15 +38,18 @@ public class GlobalExceptionHandler {
         log.error("请求路径: {} -> 发生错误: {}", requestURI, msg);
 
 
-        if (e instanceof BizException be) {
-            return R.ofBizEx(null, be);
-        }
-
         if (enableExStackTrace()) {
-            return R.fail(CommonResultStatusCodeE.STACK_INFO, stackTrace(e));
+            if (e instanceof BizException be) {
+                return R.ofBizEx(be, stackTrace(e));
+            }
+            return R.exStackTrace(UNKNOWN_EXCEPTION, stackTrace(e));
         }
 
-        return R.fail(CommonResultStatusCodeE.UNKNOWN_EXCEPTION);
+        if (e instanceof BizException be) {
+            return R.ofBizEx(be, null);
+        }
+
+        return R.fail(UNKNOWN_EXCEPTION);
     }
 
 

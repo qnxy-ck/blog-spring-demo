@@ -12,4 +12,4 @@ mybatis:
     
 blog:
   config:
-    enable-exception-stack-trace: false
+    enable-exception-stack-trace: true
