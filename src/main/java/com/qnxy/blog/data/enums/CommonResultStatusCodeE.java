@@ -17,6 +17,9 @@ public enum CommonResultStatusCodeE implements ResultStatusCode {
     FAILED("C00002", "失败"),
     UNKNOWN_EXCEPTION("C00003", "系统未知错误"),
     JSON_CONVERSION_EXCEPTION("C00004", "Json转换异常"),
+    UNAUTHORIZED_ACCESS("C00005", "未授权的访问: {0}"),
+    INCORRECT_ACCOUNT_OR_PASSWORD("C00006", "账号或密码错误"),
+    SIGNATURE_VERIFICATION_EXCEPTION("C00007", "签名验证异常"),
 
 
     ;

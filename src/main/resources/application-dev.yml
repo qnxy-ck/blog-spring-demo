@@ -8,8 +8,16 @@ mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
   configuration:
     map-underscore-to-camel-case: true
-    
-    
+
+
 blog:
   config:
-    enable-exception-stack-trace: true
+    ex:
+      enable-exception-stack-trace: true
+    auth:
+      jwt-secret: admin
+      jwt-issuer: qnxy
+      jwt-expiration-time: 1H
+      jwt-payload-key: info
+      request-header-token-name: Authorization
+   

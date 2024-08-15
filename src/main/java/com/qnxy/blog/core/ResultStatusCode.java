@@ -3,6 +3,7 @@ package com.qnxy.blog.core;
 import com.qnxy.blog.core.ex.BizException;
 
 import java.text.MessageFormat;
+import java.util.function.Supplier;
 
 /**
  * 返回结果状态码接口
@@ -32,6 +33,10 @@ public interface ResultStatusCode {
 
     default void throwException(Object... args) {
         throw BizException.create(this, args);
+    }
+
+    default Supplier<BizException> createException(Object... args) {
+        return () -> BizException.create(this, args);
     }
 
 

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Data
 @Configuration
-@ConfigurationProperties(prefix = "blog.config")
+@ConfigurationProperties(prefix = "blog.config.ex")
 public class ExceptionConfigurationProperties {
 
     private Boolean enableExceptionStackTrace;
