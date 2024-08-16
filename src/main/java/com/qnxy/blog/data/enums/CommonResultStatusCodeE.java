@@ -20,6 +20,7 @@ public enum CommonResultStatusCodeE implements ResultStatusCode {
     UNAUTHORIZED_ACCESS("C00005", "未授权的访问: {0}"),
     INCORRECT_ACCOUNT_OR_PASSWORD("C00006", "账号或密码错误"),
     SIGNATURE_VERIFICATION_EXCEPTION("C00007", "签名验证异常"),
+    FILE_UPLOAD_FAILED("C00008", "文件上传失败"),
 
 
     ;

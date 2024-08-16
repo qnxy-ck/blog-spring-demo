@@ -20,4 +20,6 @@ blog:
       jwt-expiration-time: 1H
       jwt-payload-key: info
       request-header-token-name: Authorization
-   
+    file-upload-server-base-url: http://localhost:7701/file-server
+
+
