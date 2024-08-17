@@ -38,7 +38,7 @@ public class JwtAuthHandlerInterceptor implements HandlerInterceptor {
         /*
             静态资源不进行校验, 直接放行
          */
-        if (!(handler instanceof HandlerMethod)) {
+        if (!(handler instanceof HandlerMethod handlerMethod)) {
             return true;
         }
 
@@ -51,7 +51,6 @@ public class JwtAuthHandlerInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        final HandlerMethod handlerMethod = (HandlerMethod) handler;
         // 校验当前方法是否为需要放行的
         if (checkIgnoreMethod(handlerMethod)) {
             return true;

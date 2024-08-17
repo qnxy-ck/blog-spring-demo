@@ -1,5 +1,6 @@
 package com.qnxy.blog.data.entity;
 
+import com.qnxy.blog.core.annotations.ResourceAccess;
 import com.qnxy.blog.data.GenderType;
 import lombok.Data;
 
@@ -27,6 +28,7 @@ public class UserInfo {
     /**
      * 用户头像
      */
+    @ResourceAccess
     private String userAvatar;
 
     /**
