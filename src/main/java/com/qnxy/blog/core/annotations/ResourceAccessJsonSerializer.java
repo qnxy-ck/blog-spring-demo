@@ -24,10 +24,7 @@ public class ResourceAccessJsonSerializer extends JsonSerializer<String> impleme
 
     private final ProjectConfigurationProperties projectConfigurationProperties;
 
-    private boolean multiple;
-    private boolean outputArray;
-    private String separator;
-
+    private ResourceAccess resourceAccess;
 
     @Override
     public void serialize(String value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
@@ -35,21 +32,21 @@ public class ResourceAccessJsonSerializer extends JsonSerializer<String> impleme
             return;
         }
 
-        if (!this.multiple) {
+        if (!this.resourceAccess.multiple()) {
             gen.writeString(this.splicing(value));
             return;
         }
 
-        final String[] split = value.split(this.separator);
+        final String[] split = value.split(this.resourceAccess.separator());
 
         for (int i = 0; i < split.length; i++) {
             split[i] = this.splicing(split[i]);
         }
 
-        if (this.outputArray) {
+        if (this.resourceAccess.outputArray()) {
             gen.writeArray(split, 0, split.length);
         } else {
-            gen.writeString(String.join(this.separator, split));
+            gen.writeString(String.join(this.resourceAccess.separator(), split));
         }
 
     }
@@ -59,9 +56,7 @@ public class ResourceAccessJsonSerializer extends JsonSerializer<String> impleme
         final ResourceAccess resourceAccess = property.getAnnotation(ResourceAccess.class);
 
         if (property.getType().isTypeOrSubTypeOf(String.class)) {
-            this.multiple = resourceAccess.multiple();
-            this.outputArray = resourceAccess.outputArray();
-            this.separator = resourceAccess.separator();
+            this.resourceAccess = resourceAccess;
             return this;
         }
 
