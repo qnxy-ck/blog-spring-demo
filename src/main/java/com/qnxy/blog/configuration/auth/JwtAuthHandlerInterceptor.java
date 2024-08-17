@@ -34,6 +34,15 @@ public class JwtAuthHandlerInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        
+        /*
+            静态资源不进行校验, 直接放行
+         */
+        if (!(handler instanceof HandlerMethod)) {
+            return true;
+        }
+
+
         final RequestMethod requestMethod = RequestMethod.resolve(request.getMethod());
         final String requestURI = request.getRequestURI();
 
@@ -83,7 +92,7 @@ public class JwtAuthHandlerInterceptor implements HandlerInterceptor {
         final Method method = requestMethod.getMethod();
         IgnoreAuth ignoreAuth = method.getAnnotation(IgnoreAuth.class);
         NoIgnoreAuth noIgnoreAuth = method.getAnnotation(NoIgnoreAuth.class);
-        
+
 
         return beanIgnoreAuth != null
                 ? noIgnoreAuth == null

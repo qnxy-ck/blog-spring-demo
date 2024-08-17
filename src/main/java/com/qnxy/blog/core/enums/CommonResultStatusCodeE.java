@@ -24,6 +24,8 @@ public enum CommonResultStatusCodeE implements ResultStatusCode {
     PARAMETER_VERIFICATION_FAILED("C00009", "参数校验不通过"),
     DATA_ADDITION_FAILED("C00010", "数据添加失败"),
     DATA_UPDATE_FAILED("C00011", "数据更新失败"),
+    ACCESS_RESOURCE_DOES_NOT_EXIST("C00012", "访问资源不存在: [{0}]"),
+    
     
 
     ;

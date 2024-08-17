@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -22,8 +23,7 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
 
-import static com.qnxy.blog.core.enums.CommonResultStatusCodeE.PARAMETER_VERIFICATION_FAILED;
-import static com.qnxy.blog.core.enums.CommonResultStatusCodeE.UNKNOWN_EXCEPTION;
+import static com.qnxy.blog.core.enums.CommonResultStatusCodeE.*;
 
 /**
  * @author Qnxy
@@ -69,6 +69,14 @@ public class GlobalExceptionHandler {
                     .toList();
 
             return R.result(list, PARAMETER_VERIFICATION_FAILED);
+        });
+
+        /*
+            资源不存在异常
+         */
+        put(NoResourceFoundException.class, (e, s) -> {
+            NoResourceFoundException noResourceFoundException = (NoResourceFoundException) e;
+            return R.exStackTrace(ACCESS_RESOURCE_DOES_NOT_EXIST, s, noResourceFoundException.getResourcePath());
         });
 
 
