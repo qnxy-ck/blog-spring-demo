@@ -22,8 +22,8 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
 
-import static com.qnxy.blog.data.enums.CommonResultStatusCodeE.PARAMETER_VERIFICATION_FAILED;
-import static com.qnxy.blog.data.enums.CommonResultStatusCodeE.UNKNOWN_EXCEPTION;
+import static com.qnxy.blog.core.enums.CommonResultStatusCodeE.PARAMETER_VERIFICATION_FAILED;
+import static com.qnxy.blog.core.enums.CommonResultStatusCodeE.UNKNOWN_EXCEPTION;
 
 /**
  * @author Qnxy

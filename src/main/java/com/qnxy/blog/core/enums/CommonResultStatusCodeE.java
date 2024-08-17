@@ -1,4 +1,4 @@
-package com.qnxy.blog.data.enums;
+package com.qnxy.blog.core.enums;
 
 import com.qnxy.blog.core.ResultStatusCode;
 import lombok.Getter;

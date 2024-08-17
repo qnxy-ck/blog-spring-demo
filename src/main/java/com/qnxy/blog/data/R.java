@@ -5,7 +5,7 @@ import com.qnxy.blog.core.ResultStatusCode;
 import com.qnxy.blog.core.ex.BizException;
 import lombok.Data;
 
-import static com.qnxy.blog.data.enums.CommonResultStatusCodeE.SUCCESSFUL;
+import static com.qnxy.blog.core.enums.CommonResultStatusCodeE.SUCCESSFUL;
 
 /**
  * 全局统一返回结果
