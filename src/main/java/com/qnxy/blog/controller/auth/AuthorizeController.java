@@ -1,6 +1,6 @@
 package com.qnxy.blog.controller.auth;
 
-import com.qnxy.blog.core.IgnoreAuth;
+import com.qnxy.blog.core.annotations.IgnoreAuth;
 import com.qnxy.blog.data.req.auth.AuthReq;
 import com.qnxy.blog.service.AuthorizeService;
 import lombok.RequiredArgsConstructor;

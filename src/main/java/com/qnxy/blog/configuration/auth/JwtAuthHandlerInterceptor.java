@@ -1,7 +1,7 @@
 package com.qnxy.blog.configuration.auth;
 
-import com.qnxy.blog.core.IgnoreAuth;
-import com.qnxy.blog.core.NoIgnoreAuth;
+import com.qnxy.blog.core.annotations.IgnoreAuth;
+import com.qnxy.blog.core.annotations.NoIgnoreAuth;
 import com.qnxy.blog.core.ex.BizException;
 import com.qnxy.blog.data.enums.CommonResultStatusCodeE;
 import com.qnxy.blog.service.AuthorizeService;

@@ -3,7 +3,7 @@
 <mapper namespace="com.qnxy.blog.mapper.UserInfoMapper">
     <insert id="insertUserInfo">
         insert into user_info (username, password, user_avatar)
-        values (#{username}, #{password}, #{userAvatar});
+        values (#{userInfo.username}, #{userInfo.password}, #{userInfo.userAvatar});
     </insert>
 
     <select id="selectByUsernameAndPassword" resultType="com.qnxy.blog.data.entity.UserInfo">
@@ -17,10 +17,12 @@
         from user_info
         where id = #{id}
     </select>
-    <select id="selectExistsByUsername" resultType="java.lang.Boolean">
+    <select id="selectExistByUsername" resultType="java.lang.Boolean">
         select count(*)
         from user_info
         where username = #{username}
+          and deleted = false
     </select>
+
 
 </mapper>

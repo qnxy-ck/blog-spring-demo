@@ -1,4 +1,4 @@
-package com.qnxy.blog.core;
+package com.qnxy.blog.core.annotations;
 
 import java.lang.annotation.*;
 

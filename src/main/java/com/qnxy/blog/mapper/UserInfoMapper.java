@@ -2,6 +2,7 @@ package com.qnxy.blog.mapper;
 
 import com.qnxy.blog.data.entity.UserInfo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @author Qnxy
@@ -16,8 +17,19 @@ public interface UserInfoMapper {
 
     UserInfo selectByPrimaryKey(Integer id);
 
-    boolean selectExistsByUsername(String username);
+    /**
+     * 根据用户名称查询用户信息
+     *
+     * @param username 用户名称
+     */
+    boolean selectExistByUsername(String username);
 
-    boolean insertUserInfo(UserInfo userInfo);
-    
+    /**
+     * 添加用户信息
+     *
+     * @param userInfo 用户信息
+     * @return 添加成功返回true
+     */
+    int insertUserInfo(@Param("userInfo") UserInfo userInfo);
+
 }

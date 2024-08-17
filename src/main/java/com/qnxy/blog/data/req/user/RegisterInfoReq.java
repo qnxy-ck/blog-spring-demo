@@ -1,0 +1,41 @@
+package com.qnxy.blog.data.req.user;
+
+import com.qnxy.blog.core.annotations.FieldEqualityCheck;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
+import org.hibernate.validator.constraints.Length;
+
+/**
+ * @author Qnxy
+ */
+@Data
+@FieldEqualityCheck(value = "confirmPassword", targetFieldName = "password", message = "再次确认输入的密码不一致")
+public class RegisterInfoReq {
+
+    /**
+     * 用户名称, 唯一
+     */
+    @Length(min = 5, max = 20, message = "用户名长度需要在5-20之间")
+    @NotBlank(message = "用户名不能为空")
+    private String username;
+
+    /**
+     * 用户设置的密码
+     */
+    @Length(min = 5, max = 18, message = "密码长度需要在5-18之间")
+    @NotBlank(message = "密码不能为空")
+    private String password;
+
+    /**
+     * 再次确认输入的密码
+     */
+    private String confirmPassword;
+
+    /**
+     * 用户头像
+     */
+    @NotBlank(message = "没有添加头像信息")
+    private String userAvatar;
+
+
+}

@@ -22,7 +22,9 @@ public enum CommonResultStatusCodeE implements ResultStatusCode {
     SIGNATURE_VERIFICATION_EXCEPTION("C00007", "签名验证异常"),
     FILE_UPLOAD_FAILED("C00008", "文件上传失败"),
     PARAMETER_VERIFICATION_FAILED("C00009", "参数校验不通过"),
-
+    DATA_ADDITION_FAILED("C00010", "数据添加失败"),
+    DATA_UPDATE_FAILED("C00011", "数据更新失败"),
+    
 
     ;
     private final String code;

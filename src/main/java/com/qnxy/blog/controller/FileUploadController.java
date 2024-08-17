@@ -1,7 +1,7 @@
 package com.qnxy.blog.controller;
 
 import com.qnxy.blog.configuration.ProjectConfigurationProperties;
-import com.qnxy.blog.core.IgnoreAuth;
+import com.qnxy.blog.core.annotations.IgnoreAuth;
 import com.qnxy.blog.core.ex.BizException;
 import com.qnxy.blog.data.enums.CommonResultStatusCodeE;
 import com.qnxy.blog.data.resp.UploadResp;
