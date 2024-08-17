@@ -1,9 +1,14 @@
 package com.qnxy.blog.data.req.user;
 
 import com.qnxy.blog.core.annotations.FieldEqualityCheck;
+import com.qnxy.blog.data.GenderType;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
+
+import java.time.LocalDate;
 
 /**
  * @author Qnxy
@@ -36,6 +41,19 @@ public class RegisterInfoReq {
      */
     @NotBlank(message = "没有添加头像信息")
     private String userAvatar;
+
+    /**
+     * 性别
+     */
+    @NotNull(message = "输入性别错误")
+    private GenderType gender;
+
+    /**
+     * 生日
+     */
+    @NotNull(message = "生日不能为空")
+    @Past(message = "生日日期不能是以后的日期")
+    private LocalDate birthday;
 
 
 }

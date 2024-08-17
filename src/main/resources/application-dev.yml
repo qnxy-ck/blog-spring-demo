@@ -8,7 +8,7 @@ mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
   configuration:
     map-underscore-to-camel-case: true
-
+    default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
 
 blog:
   config:

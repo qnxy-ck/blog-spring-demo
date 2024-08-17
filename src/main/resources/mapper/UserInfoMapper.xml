@@ -2,18 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.qnxy.blog.mapper.UserInfoMapper">
     <insert id="insertUserInfo">
-        insert into user_info (username, password, user_avatar)
-        values (#{userInfo.username}, #{userInfo.password}, #{userInfo.userAvatar});
+        insert into user_info (username, password, user_avatar, gender, birthday)
+        values (#{userInfo.username}, #{userInfo.password}, #{userInfo.userAvatar}, #{userInfo.gender}, #{userInfo.birthday});
     </insert>
 
     <select id="selectByUsernameAndPassword" resultType="com.qnxy.blog.data.entity.UserInfo">
-        select id, username, password, user_avatar, deleted, created_time, updated_time
+        select *
         from user_info
         where username = #{username}
           and password = #{password}
     </select>
     <select id="selectByPrimaryKey" resultType="com.qnxy.blog.data.entity.UserInfo">
-        select id, username, password, user_avatar, deleted, created_time, updated_time
+        select *
         from user_info
         where id = #{id}
     </select>

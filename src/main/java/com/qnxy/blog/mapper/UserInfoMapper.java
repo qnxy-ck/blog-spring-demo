@@ -15,7 +15,7 @@ public interface UserInfoMapper {
      */
     UserInfo selectByUsernameAndPassword(String username, String password);
 
-    UserInfo selectByPrimaryKey(Integer id);
+    UserInfo selectByPrimaryKey(Long id);
 
     /**
      * 根据用户名称查询用户信息
