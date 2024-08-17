@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class UserInfo {
 
     private Long id;
-    
+
     /**
      * 用户名
      */

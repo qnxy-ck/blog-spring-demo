@@ -31,13 +31,16 @@ public interface ResultStatusCode {
     }
 
 
-    default void throwException(Object... args) {
+    default void throwEx(Object... args) {
         throw BizException.create(this, args);
     }
 
-    default Supplier<BizException> createException(Object... args) {
-        return () -> BizException.create(this, args);
+    default BizException createEx(Object... args) {
+        return BizException.create(this, args);
     }
 
+    default Supplier<BizException> createSupplierEx(Object... args) {
+        return () -> BizException.create(this, args);
+    }
 
 }

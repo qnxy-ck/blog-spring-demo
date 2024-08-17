@@ -51,6 +51,14 @@ public class R<DATA> {
         this.exStackTrace = exStackTrace;
     }
 
+    public static <DATA> R<DATA> suc(DATA data) {
+        return new R<>(data, SUCCESSFUL.getCode(), SUCCESSFUL.getMessage(), null);
+    }
+
+    public static <DATA, STATUS extends Enum<STATUS> & ResultStatusCode> R<DATA> fail(STATUS status, Object... args) {
+        return new R<>(null, status.getCode(), status.getFullMessage(args), null);
+    }
+
     public static <DATA, STATUS extends Enum<STATUS> & ResultStatusCode> R<DATA> result(DATA data, STATUS status, Object... args) {
         return new R<>(data, status.getCode(), status.getFullMessage(args), null);
     }
@@ -62,14 +70,5 @@ public class R<DATA> {
     public static <DATA, STATUS extends Enum<STATUS> & ResultStatusCode> R<DATA> exStackTrace(STATUS status, String exStackTrace, Object... args) {
         return new R<>(null, status.getCode(), status.getFullMessage(args), exStackTrace);
     }
-
-    public static <DATA> R<DATA> suc(DATA data) {
-        return new R<>(data, SUCCESSFUL.getCode(), SUCCESSFUL.getMessage(), null);
-    }
-
-    public static <DATA, STATUS extends Enum<STATUS> & ResultStatusCode> R<DATA> fail(STATUS status, Object... args) {
-        return new R<>(null, status.getCode(), status.getFullMessage(args), null);
-    }
-
 
 }

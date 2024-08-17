@@ -5,14 +5,24 @@ import com.qnxy.blog.data.R;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSourceResolvable;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiFunction;
 
+import static com.qnxy.blog.data.enums.CommonResultStatusCodeE.PARAMETER_VERIFICATION_FAILED;
 import static com.qnxy.blog.data.enums.CommonResultStatusCodeE.UNKNOWN_EXCEPTION;
 
 /**
@@ -25,38 +35,67 @@ public class GlobalExceptionHandler {
 
     private final ExceptionConfigurationProperties exceptionConfigurationProperties;
 
+    private static final Map<Class<? extends Exception>, BiFunction<Exception, String, R<?>>> CLASS_EXCEPTION_PROCESSOR_MAP = new ConcurrentHashMap<>() {{
+        
+        /*
+            自定义异常处理
+         */
+        put(BizException.class, (e, stackTraceInfo) -> R.ofBizEx((BizException) e, stackTraceInfo));
+        
+        /*
+            参数校验异常处理
+            @RequestBody 
+         */
+        put(MethodArgumentNotValidException.class, (e, stackTraceInfo) -> {
+            List<String> errorMessageList = ((MethodArgumentNotValidException) e).getBindingResult()
+                    .getAllErrors()
+                    .stream()
+                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .filter(it -> it != null && !it.isEmpty())
+                    .toList();
+
+            return R.result(errorMessageList, PARAMETER_VERIFICATION_FAILED);
+        });
+
+
+//        put(ConstraintViolationException.class, (e, stackTraceInfo) -> R.result(e.getMessage(), PARAMETER_VERIFICATION_FAILED));
+
+        // 参数列表校验发生异常
+        put(HandlerMethodValidationException.class, (e, stackTraceInfo) -> {
+            List<String> list = ((HandlerMethodValidationException) e).getAllErrors()
+                    .stream()
+                    .map(MessageSourceResolvable::getDefaultMessage)
+                    .filter(it -> it != null && !it.isEmpty())
+                    .toList();
+
+            return R.result(list, PARAMETER_VERIFICATION_FAILED);
+        });
+
+
+    }};
+
 
     @ExceptionHandler(value = Exception.class)
     @ResponseStatus(code = HttpStatus.OK)
-    public <D> R<D> exception(Exception e, HttpServletRequest request) {
-
-        String requestURI = request.getRequestURI();
-        String msg = e instanceof BizException
+    public R<?> exception(Exception e, HttpServletRequest request) {
+        final String requestURI = request.getRequestURI();
+        final String msg = e instanceof BizException
                 ? ((BizException) e).getStatus().getCode() + ":" + e.getMessage()
                 : e.getMessage();
 
-        log.error("请求路径: {} -> 发生错误: {}", requestURI, msg);
+        log.error("请求路径: {} -> 发生错误: {}", requestURI, msg, e);
 
+        final String stackTraceInfo = enableExStackTrace() ? stackTrace(e) : null;
 
-        if (enableExStackTrace()) {
-            if (e instanceof BizException be) {
-                return R.ofBizEx(be, stackTrace(e));
-            }
-            return R.exStackTrace(UNKNOWN_EXCEPTION, stackTrace(e));
-        }
-
-        if (e instanceof BizException be) {
-            return R.ofBizEx(be, null);
-        }
-
-        return R.fail(UNKNOWN_EXCEPTION);
+        return Optional.ofNullable(CLASS_EXCEPTION_PROCESSOR_MAP.get(e.getClass()))
+                .map(it -> it.apply(e, stackTraceInfo))
+                .orElseGet(() -> R.exStackTrace(UNKNOWN_EXCEPTION, stackTraceInfo));
     }
 
 
     private boolean enableExStackTrace() {
         return this.exceptionConfigurationProperties.getEnableExceptionStackTrace() == Boolean.TRUE;
     }
-
 
     private static String stackTrace(Throwable throwable) {
         StringWriter sw = new StringWriter();

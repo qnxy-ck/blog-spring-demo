@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.qnxy.blog.mapper.UserInfoMapper">
+    <insert id="insertUserInfo">
+        insert into user_info (username, password, user_avatar)
+        values (#{username}, #{password}, #{userAvatar});
+    </insert>
 
     <select id="selectByUsernameAndPassword" resultType="com.qnxy.blog.data.entity.UserInfo">
         select id, username, password, user_avatar, deleted, created_time, updated_time
@@ -13,4 +17,10 @@
         from user_info
         where id = #{id}
     </select>
+    <select id="selectExistsByUsername" resultType="java.lang.Boolean">
+        select count(*)
+        from user_info
+        where username = #{username}
+    </select>
+
 </mapper>

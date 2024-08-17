@@ -41,7 +41,7 @@ public class AuthorizeServiceImpl implements AuthorizeService, InitializingBean 
     public String login(AuthReq authReq) {
         final Long userInfoId = Optional.ofNullable(this.userInfoMapper.selectByUsernameAndPassword(authReq.getUsername(), authReq.getPassword()))
                 .map(UserInfo::getId)
-                .orElseThrow(INCORRECT_ACCOUNT_OR_PASSWORD.createException());
+                .orElseThrow(INCORRECT_ACCOUNT_OR_PASSWORD.createSupplierEx());
 
         final Instant expires = LocalDateTime.now()
                 .plusSeconds(this.authenticationConfigurationProperties.getJwtExpirationTime().getSeconds())

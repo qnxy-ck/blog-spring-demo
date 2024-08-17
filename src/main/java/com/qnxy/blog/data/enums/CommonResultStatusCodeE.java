@@ -21,6 +21,7 @@ public enum CommonResultStatusCodeE implements ResultStatusCode {
     INCORRECT_ACCOUNT_OR_PASSWORD("C00006", "账号或密码错误"),
     SIGNATURE_VERIFICATION_EXCEPTION("C00007", "签名验证异常"),
     FILE_UPLOAD_FAILED("C00008", "文件上传失败"),
+    PARAMETER_VERIFICATION_FAILED("C00009", "参数校验不通过"),
 
 
     ;

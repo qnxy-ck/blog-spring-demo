@@ -14,8 +14,10 @@ public interface UserInfoMapper {
      */
     UserInfo selectByUsernameAndPassword(String username, String password);
 
-    
     UserInfo selectByPrimaryKey(Integer id);
-    
 
+    boolean selectExistsByUsername(String username);
+
+    boolean insertUserInfo(UserInfo userInfo);
+    
 }

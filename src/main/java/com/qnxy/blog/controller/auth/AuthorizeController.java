@@ -1,16 +1,13 @@
 package com.qnxy.blog.controller.auth;
 
 import com.qnxy.blog.core.IgnoreAuth;
-import com.qnxy.blog.data.CurrentAuthUserId;
 import com.qnxy.blog.data.req.auth.AuthReq;
 import com.qnxy.blog.service.AuthorizeService;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Locale;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 用户授权
