@@ -1,4 +1,4 @@
-package com.qnxy.blog.core.annotations;
+package com.qnxy.blog.core.json;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.BeanProperty;
@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.ContextualSerializer;
 import com.qnxy.blog.configuration.ProjectConfigurationProperties;
+import com.qnxy.blog.core.annotations.ResourceAccess;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
