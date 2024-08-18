@@ -10,6 +10,11 @@ mybatis:
     map-underscore-to-camel-case: true
     default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
 
+logging:
+  level:
+    com.qnxy.blog.mapper: debug
+
+
 blog:
   config:
     ex:
