@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.ContextualSerializer;
 import com.qnxy.blog.configuration.ProjectConfigurationProperties;
 import com.qnxy.blog.core.annotations.ResourceAccess;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -20,10 +20,14 @@ import java.io.IOException;
  * @author Qnxy
  */
 @Component
-@RequiredArgsConstructor
 public class ResourceAccessJsonSerializer extends JsonSerializer<String> implements ContextualSerializer {
 
-    private final ProjectConfigurationProperties projectConfigurationProperties;
+    private ProjectConfigurationProperties projectConfigurationProperties;
+
+    @Autowired
+    public void setProjectConfigurationProperties(ProjectConfigurationProperties projectConfigurationProperties) {
+        this.projectConfigurationProperties = projectConfigurationProperties;
+    }
 
     private ResourceAccess resourceAccess;
 
