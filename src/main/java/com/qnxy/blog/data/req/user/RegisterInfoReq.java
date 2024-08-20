@@ -5,6 +5,7 @@ import com.qnxy.blog.data.GenderType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
@@ -35,6 +36,12 @@ public class RegisterInfoReq {
      * 再次确认输入的密码
      */
     private String confirmPassword;
+
+    /**
+     * 用户手机号
+     */
+    @Pattern(regexp = "^1\\d{10}$", message = "输入手机号格式不正确")
+    private String phoneNun;
 
     /**
      * 用户头像

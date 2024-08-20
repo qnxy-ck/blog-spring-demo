@@ -1,6 +1,7 @@
 package com.qnxy.blog.data.entity;
 
 import com.qnxy.blog.core.annotations.ResourceAccess;
+import com.qnxy.blog.core.annotations.Sensitive;
 import com.qnxy.blog.data.GenderType;
 import lombok.Data;
 
@@ -8,6 +9,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
+ * 用户信息
+ * 
  * @author Qnxy
  */
 @Data
@@ -24,6 +27,12 @@ public class UserInfo {
      * 用户密码
      */
     private String password;
+
+    /**
+     * 用户手机号
+     */
+    @Sensitive
+    private String phoneNum;
 
     /**
      * 用户头像
