@@ -5,8 +5,10 @@ import com.qnxy.blog.data.R;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.core.NestedRuntimeException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -79,6 +81,16 @@ public class GlobalExceptionHandler {
         put(NoResourceFoundException.class, (e, s) -> {
             NoResourceFoundException noResourceFoundException = (NoResourceFoundException) e;
             return R.exStackTrace(ACCESS_RESOURCE_DOES_NOT_EXIST, s, noResourceFoundException.getResourcePath());
+        });
+
+        /*
+            MyBatis 框架发出的异常
+         */
+        put(MyBatisSystemException.class, (e, s) -> {
+            if (((NestedRuntimeException) e).getRootCause() instanceof BizException bizException) {
+                return R.ofBizEx(bizException, s);
+            }
+            return R.exStackTrace(UNKNOWN_EXCEPTION, s);
         });
 
 
