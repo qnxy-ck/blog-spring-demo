@@ -1,6 +1,7 @@
 package com.qnxy.blog.data.entity;
 
 import com.qnxy.blog.core.annotations.Desensitization;
+import com.qnxy.blog.core.annotations.Desensitization.ValueType;
 import com.qnxy.blog.core.annotations.ResourceAccess;
 import com.qnxy.blog.core.annotations.Sensitive;
 import com.qnxy.blog.data.GenderType;
@@ -29,13 +30,14 @@ public class UserInfo {
     /**
      * 用户密码
      */
+    @Desensitization(ValueType.SET_NULL)
     private String password;
 
     /**
      * 用户手机号
      */
     @Sensitive
-    @Desensitization(value = Desensitization.ValueType.PHONE_NUMBER)
+    @Desensitization(ValueType.PHONE_NUMBER)
     private String phoneNum;
 
     /**

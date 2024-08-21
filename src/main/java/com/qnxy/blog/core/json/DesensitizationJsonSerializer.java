@@ -38,13 +38,8 @@ public class DesensitizationJsonSerializer extends JsonSerializer<String> implem
 
     @Override
     public JsonSerializer<?> createContextual(SerializerProvider prov, BeanProperty property) throws JsonMappingException {
-        final Desensitization desensitization = property.getAnnotation(Desensitization.class);
-        if (property.getType().isTypeOrSubTypeOf(String.class)) {
-            this.desensitization = desensitization;
-            return this;
-        }
-
-        return prov.findValueSerializer(property.getType(), property);
+        this.desensitization = property.getAnnotation(Desensitization.class);
+        return this;
     }
-
+    
 }

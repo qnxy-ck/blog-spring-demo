@@ -9,6 +9,8 @@ import java.lang.annotation.*;
 
 /**
  * 被标注的字段 值将被脱敏处理
+ * <p>
+ * 被标注的字段必须是字符串类型, 其他类型不生效
  *
  * @author Qnxy
  */
@@ -44,6 +46,8 @@ public @interface Desensitization {
         ADDRESS,
         ID_CARD,
         USERNAME,
+        PASSWORD,
+        SET_NULL,
 
         /**
          * 自定义

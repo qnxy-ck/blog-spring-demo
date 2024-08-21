@@ -25,7 +25,7 @@ public class PhoneNumberDesensitizationHandler implements Desensitization.Desens
         }
 
         char[] charArray = data.toCharArray();
-        Arrays.fill(charArray, 3, 7, symbol);
+        Arrays.fill(charArray, 3, data.length() - 4, symbol);
 
         return new String(charArray);
     }
