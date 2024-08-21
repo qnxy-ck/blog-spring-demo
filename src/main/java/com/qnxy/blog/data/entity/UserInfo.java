@@ -5,6 +5,7 @@ import com.qnxy.blog.core.annotations.ResourceAccess;
 import com.qnxy.blog.core.annotations.Sensitive;
 import com.qnxy.blog.data.GenderType;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
  * @author Qnxy
  */
 @Data
+@Accessors(chain = true)
 public class UserInfo {
 
     private Long id;
@@ -33,7 +35,7 @@ public class UserInfo {
      * 用户手机号
      */
     @Sensitive
-    @Desensitization(Desensitization.ValueType.PHONE_NUMBER)
+    @Desensitization(value = Desensitization.ValueType.PHONE_NUMBER)
     private String phoneNum;
 
     /**

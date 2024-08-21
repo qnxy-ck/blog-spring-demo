@@ -2,9 +2,8 @@ package com.qnxy.blog.core.json.desensitization;
 
 import com.qnxy.blog.core.annotations.Desensitization;
 import com.qnxy.blog.core.annotations.Desensitization.ValueType;
-import lombok.Setter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -18,12 +17,14 @@ import java.util.Map;
  * @author Qnxy
  */
 @Component
+@RequiredArgsConstructor
 public class DesensitizationHandlerFactory implements InitializingBean {
 
     private static final Map<ValueType, Desensitization.DesensitizationHandler> DESENSITIZATION_HANDLER_MAP = new HashMap<>();
     private static final Map<Class<? extends Desensitization.DesensitizationHandler>, Desensitization.DesensitizationHandler> CUSTOMER_DESENSITIZATION_HANDLER_MAP = new HashMap<>();
-    @Setter(onMethod_ = @Autowired)
-    private List<Desensitization.DesensitizationHandler> desensitizationHandlerList;
+
+    private final List<Desensitization.DesensitizationHandler> desensitizationHandlerList;
+    
 
     public Desensitization.DesensitizationHandler withValueType(ValueType type, Class<? extends Desensitization.DesensitizationHandler> customDesensitizationHandlerClass) {
         Desensitization.DesensitizationHandler desensitizationHandler;
