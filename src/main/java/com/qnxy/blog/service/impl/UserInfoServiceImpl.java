@@ -8,8 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import static com.qnxy.blog.core.ExceptionHandler.expectFalse;
-import static com.qnxy.blog.core.ResultUtil.insertSuc;
+import static com.qnxy.blog.core.VerificationExpectations.expectFalse;
+import static com.qnxy.blog.core.VerificationExpectations.expectInsertOk;
 import static com.qnxy.blog.core.enums.BizResultStatusCodeE.ACCOUNT_NAME_ALREADY_EXISTS;
 
 /**
@@ -28,6 +28,6 @@ public class UserInfoServiceImpl implements UserInfoService {
         UserInfo userInfo = new UserInfo();
         BeanUtils.copyProperties(registerInfoReq, userInfo);
 
-        insertSuc(this.userInfoMapper.insertUserInfo(userInfo));
+        expectInsertOk(this.userInfoMapper.insertUserInfo(userInfo));
     }
 }

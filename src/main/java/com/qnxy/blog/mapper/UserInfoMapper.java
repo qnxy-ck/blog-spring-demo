@@ -30,6 +30,6 @@ public interface UserInfoMapper {
      * @param userInfo 用户信息
      * @return 添加成功返回true
      */
-    int insertUserInfo(@Param("userInfo") UserInfo userInfo);
+    boolean insertUserInfo(@Param("userInfo") UserInfo userInfo);
 
 }
