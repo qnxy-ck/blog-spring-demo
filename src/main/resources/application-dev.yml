@@ -26,5 +26,7 @@ blog:
       jwt-payload-key: info
       request-header-token-name: Authorization
     file-upload-server-base-url: http://localhost:7701/file-server
+    sensitive-aes-key: eiSXt2zq4m6+8mkI
+    sensitive-sm4-key: BAmrd0j61deyczILL2FPBg==
 
 
