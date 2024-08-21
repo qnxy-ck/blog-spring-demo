@@ -1,6 +1,6 @@
 package com.qnxy.blog.configuration.ex;
 
-import com.qnxy.blog.core.ex.BizException;
+import com.qnxy.blog.core.BizException;
 import com.qnxy.blog.data.R;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
 
-import static com.qnxy.blog.core.enums.CommonResultStatusCodeE.*;
+import static com.qnxy.blog.core.CommonResultStatusCodeE.*;
 
 /**
  * @author Qnxy
@@ -60,7 +60,9 @@ public class GlobalExceptionHandler {
 
 //        put(ConstraintViolationException.class, (e, stackTraceInfo) -> R.result(e.getMessage(), PARAMETER_VERIFICATION_FAILED));
 
-        // 参数列表校验发生异常
+        /*
+            参数列表校验发生异常
+         */
         put(HandlerMethodValidationException.class, (e, stackTraceInfo) -> {
             List<String> list = ((HandlerMethodValidationException) e).getAllErrors()
                     .stream()

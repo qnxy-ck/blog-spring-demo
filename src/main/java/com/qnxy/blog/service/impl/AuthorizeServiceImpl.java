@@ -6,8 +6,8 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.qnxy.blog.configuration.auth.AuthenticationConfigurationProperties;
-import com.qnxy.blog.core.enums.CommonResultStatusCodeE;
-import com.qnxy.blog.core.ex.BizException;
+import com.qnxy.blog.core.BizException;
+import com.qnxy.blog.core.CommonResultStatusCodeE;
 import com.qnxy.blog.data.entity.UserInfo;
 import com.qnxy.blog.data.req.auth.AuthReq;
 import com.qnxy.blog.mapper.UserInfoMapper;
@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Optional;
 
-import static com.qnxy.blog.core.enums.CommonResultStatusCodeE.INCORRECT_ACCOUNT_OR_PASSWORD;
+import static com.qnxy.blog.core.CommonResultStatusCodeE.INCORRECT_ACCOUNT_OR_PASSWORD;
 
 /**
  * @author Qnxy

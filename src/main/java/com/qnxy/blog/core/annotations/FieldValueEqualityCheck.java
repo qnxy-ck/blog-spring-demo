@@ -1,5 +1,6 @@
 package com.qnxy.blog.core.annotations;
 
+import com.qnxy.blog.core.validation.FieldEqualityCheckConstraintValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
@@ -19,7 +20,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint(validatedBy = FieldEqualityCheckConstraintValidator.class)
 @Target(TYPE)
 @Retention(RUNTIME)
-public @interface FieldEqualityCheck {
+public @interface FieldValueEqualityCheck {
 
     String message();
 

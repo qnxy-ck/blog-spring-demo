@@ -1,6 +1,4 @@
-package com.qnxy.blog.core.ex;
-
-import com.qnxy.blog.core.ResultStatusCode;
+package com.qnxy.blog.core;
 
 import java.util.Optional;
 import java.util.function.Supplier;

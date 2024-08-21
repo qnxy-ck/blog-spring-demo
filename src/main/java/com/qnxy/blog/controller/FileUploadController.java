@@ -1,9 +1,9 @@
 package com.qnxy.blog.controller;
 
 import com.qnxy.blog.configuration.ProjectConfigurationProperties;
+import com.qnxy.blog.core.BizException;
+import com.qnxy.blog.core.CommonResultStatusCodeE;
 import com.qnxy.blog.core.annotations.IgnoreAuth;
-import com.qnxy.blog.core.enums.CommonResultStatusCodeE;
-import com.qnxy.blog.core.ex.BizException;
 import com.qnxy.blog.data.resp.UploadResp;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ByteArrayResource;

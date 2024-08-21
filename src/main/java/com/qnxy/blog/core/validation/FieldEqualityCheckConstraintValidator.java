@@ -1,5 +1,6 @@
-package com.qnxy.blog.core.annotations;
+package com.qnxy.blog.core.validation;
 
+import com.qnxy.blog.core.annotations.FieldValueEqualityCheck;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.util.ReflectionUtils;
@@ -12,7 +13,7 @@ import java.util.Objects;
  *
  * @author Qnxy
  */
-public class FieldEqualityCheckConstraintValidator implements ConstraintValidator<FieldEqualityCheck, Object> {
+public class FieldEqualityCheckConstraintValidator implements ConstraintValidator<FieldValueEqualityCheck, Object> {
 
     private String baseFieldName;
     private String targetFieldName;
@@ -27,7 +28,7 @@ public class FieldEqualityCheckConstraintValidator implements ConstraintValidato
     }
 
     @Override
-    public void initialize(FieldEqualityCheck constraintAnnotation) {
+    public void initialize(FieldValueEqualityCheck constraintAnnotation) {
         this.baseFieldName = constraintAnnotation.value();
         this.targetFieldName = constraintAnnotation.targetFieldName();
     }

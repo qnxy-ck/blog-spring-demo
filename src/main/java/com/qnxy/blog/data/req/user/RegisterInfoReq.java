@@ -1,6 +1,6 @@
 package com.qnxy.blog.data.req.user;
 
-import com.qnxy.blog.core.annotations.FieldEqualityCheck;
+import com.qnxy.blog.core.annotations.FieldValueEqualityCheck;
 import com.qnxy.blog.data.GenderType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -15,7 +15,7 @@ import java.time.LocalDate;
  * @author Qnxy
  */
 @Data
-@FieldEqualityCheck(value = "confirmPassword", targetFieldName = "password", message = "再次确认输入的密码不一致")
+@FieldValueEqualityCheck(value = "confirmPassword", targetFieldName = "password", message = "再次确认输入的密码不一致")
 public class RegisterInfoReq {
 
     /**

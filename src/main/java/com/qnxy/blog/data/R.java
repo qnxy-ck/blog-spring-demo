@@ -1,11 +1,11 @@
 package com.qnxy.blog.data;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.qnxy.blog.core.BizException;
 import com.qnxy.blog.core.ResultStatusCode;
-import com.qnxy.blog.core.ex.BizException;
 import lombok.Data;
 
-import static com.qnxy.blog.core.enums.CommonResultStatusCodeE.SUCCESSFUL;
+import static com.qnxy.blog.core.CommonResultStatusCodeE.SUCCESSFUL;
 
 /**
  * 全局统一返回结果

@@ -1,6 +1,5 @@
-package com.qnxy.blog.core.enums;
+package com.qnxy.blog.core;
 
-import com.qnxy.blog.core.ResultStatusCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -25,7 +24,7 @@ public enum CommonResultStatusCodeE implements ResultStatusCode {
     DATA_ADDITION_FAILED("C00010", "数据添加失败"),
     DATA_UPDATE_FAILED("C00011", "数据更新失败"),
     ACCESS_RESOURCE_DOES_NOT_EXIST("C00012", "访问资源不存在: [{0}]"),
-    
+    SENSITIVE_DATA_PROCESSING_FAILED("C00013", "敏感数据处理失败"),
     
 
     ;

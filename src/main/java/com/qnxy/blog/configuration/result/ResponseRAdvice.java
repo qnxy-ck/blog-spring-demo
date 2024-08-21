@@ -2,8 +2,8 @@ package com.qnxy.blog.configuration.result;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.qnxy.blog.core.enums.CommonResultStatusCodeE;
-import com.qnxy.blog.core.ex.BizException;
+import com.qnxy.blog.core.BizException;
+import com.qnxy.blog.core.CommonResultStatusCodeE;
 import com.qnxy.blog.data.R;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;

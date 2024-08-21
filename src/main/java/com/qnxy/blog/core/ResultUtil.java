@@ -1,7 +1,7 @@
 package com.qnxy.blog.core;
 
-import static com.qnxy.blog.core.enums.CommonResultStatusCodeE.DATA_ADDITION_FAILED;
-import static com.qnxy.blog.core.enums.CommonResultStatusCodeE.DATA_UPDATE_FAILED;
+import static com.qnxy.blog.core.CommonResultStatusCodeE.DATA_ADDITION_FAILED;
+import static com.qnxy.blog.core.CommonResultStatusCodeE.DATA_UPDATE_FAILED;
 
 /**
  * 返回结果工具
