@@ -2,6 +2,8 @@ package com.qnxy.blog.configuration;
 
 import com.qnxy.blog.configuration.auth.CurrentAuthUserIdHandlerMethodArgumentResolver;
 import com.qnxy.blog.configuration.auth.JwtAuthHandlerInterceptor;
+import com.qnxy.blog.core.json.LongValueJsonSerializer;
+import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -16,6 +18,14 @@ import java.util.List;
 @SuppressWarnings("NullableProblems")
 @Configuration
 public class ProjectConfigurer {
+
+    /**
+     * Jackson 增加自定义配置
+     */
+    @Bean
+    public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
+        return it -> it.serializers(new LongValueJsonSerializer());
+    }
 
     /**
      * WebMvcConfigurer 配置
