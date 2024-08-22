@@ -1,6 +1,7 @@
 package com.qnxy.blog.configuration.ex;
 
 import com.qnxy.blog.core.BizException;
+import com.qnxy.blog.core.VerificationExpectations;
 import com.qnxy.blog.data.R;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -91,6 +92,19 @@ public class GlobalExceptionHandler {
                 return R.ofBizEx(bizException, s);
             }
             return R.exStackTrace(UNKNOWN_EXCEPTION, s);
+        });
+        
+        /*
+            VerificationExpectations.NestedException 处理
+            去除嵌套的异常在当前 Map 中取出已知的异常处理器进行处理
+            如果没有找到抛出未知异常
+         */
+        put(VerificationExpectations.NestedException.class, (e, s) -> {
+            final Throwable cause = e.getCause();
+            return Optional.ofNullable(cause)
+                    .map(it -> get(it.getClass()))
+                    .map(it -> it.apply((Exception) cause, s))
+                    .orElseGet(() -> R.exStackTrace(UNKNOWN_EXCEPTION, s));
         });
 
 

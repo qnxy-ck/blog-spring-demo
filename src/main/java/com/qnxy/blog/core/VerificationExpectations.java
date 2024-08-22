@@ -3,6 +3,9 @@ package com.qnxy.blog.core;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+import java.util.concurrent.Callable;
+
 /**
  * 验证数据是否符合期待值
  * 不符合则抛出异常 {@link BizException}
@@ -58,6 +61,11 @@ public final class VerificationExpectations {
         }
     }
 
+    
+    
+    /*
+        ==============================数据库 DML 操作返回值成功校验=================================
+     */
 
     public static void expectUpdateOk(long value) {
         expectGtZero(value, CommonResultStatusCodeE.DATA_UPDATE_FAILED);
@@ -83,5 +91,72 @@ public final class VerificationExpectations {
         expectTrue(value, CommonResultStatusCodeE.DATA_DELETION_FAILED);
     }
 
+     /*
+        =============================================================================
+     */
+
+
+    /**
+     * 期待没有异常, 如果执行中发生了异常则抛出指定状态码的异常
+     * <p>
+     * 如果执行中抛出了 {@link BizException} 将被原样抛出
+     */
+    public static <S extends Enum<S> & ResultStatusCode, T> T expectNotException(Callable<T> execute, S s, Object... args) {
+        return expectNotException(execute, Exception.class, s, args);
+    }
+
+    /**
+     * 处理没有执行结果的
+     */
+    public static <S extends Enum<S> & ResultStatusCode> void expectNotException(VoidCallable func, S s, Object... args) {
+        expectNotException(func, Exception.class, s, args);
+    }
+
+    public static <S extends Enum<S> & ResultStatusCode> void expectNotException(VoidCallable func, Class<? extends Exception> exClass, S s, Object... args) {
+        Objects.requireNonNull(func);
+        expectNotException(() -> {
+            func.call();
+            return null;
+        }, s, args);
+    }
+
+
+    /**
+     * 期待没有指定类型的异常, 如果执行中发生了指定的异常则抛出指定状态码的异常
+     * <p>
+     * 如果执行中抛出了 {@link BizException} 将被原样抛出
+     */
+    public static <S extends Enum<S> & ResultStatusCode, T> T expectNotException(Callable<T> execute, Class<? extends Exception> exClass, S s, Object... args) {
+        Objects.requireNonNull(execute);
+
+        try {
+            return execute.call();
+        } catch (BizException e) {
+            throw e;
+        } catch (Exception e) {
+            if (exClass.isAssignableFrom(e.getClass())) {
+                throw new BizException(e, s, args);
+            }
+
+            throw new NestedException(e);
+        }
+    }
+
+    @FunctionalInterface
+    public interface VoidCallable {
+
+        void call() throws Exception;
+
+    }
+
+
+    /**
+     * 结果期待验证时产生的嵌套异常
+     */
+    public static class NestedException extends RuntimeException {
+        public NestedException(Throwable cause) {
+            super(cause);
+        }
+    }
 
 }
