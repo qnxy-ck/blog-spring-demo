@@ -4,7 +4,6 @@ import com.qnxy.blog.configuration.auth.CurrentAuthUserIdHandlerMethodArgumentRe
 import com.qnxy.blog.configuration.auth.JwtAuthHandlerInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -17,11 +16,6 @@ import java.util.List;
 @SuppressWarnings("NullableProblems")
 @Configuration
 public class ProjectConfigurer {
-
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
 
     /**
      * WebMvcConfigurer 配置

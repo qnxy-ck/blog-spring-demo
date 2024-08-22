@@ -7,13 +7,17 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.ContextualSerializer;
 import com.qnxy.blog.configuration.ProjectConfigurationProperties;
+import com.qnxy.blog.controller.FileController;
 import com.qnxy.blog.core.annotations.ResourceAccess;
 import lombok.Setter;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * 资源地址自动添加前缀 Json 序列化器
@@ -21,7 +25,7 @@ import java.io.IOException;
  * @author Qnxy
  */
 @Component
-public class ResourceAccessJsonSerializer extends JsonSerializer<String> implements ContextualSerializer {
+public class ResourceAccessJsonSerializer extends JsonSerializer<String> implements ContextualSerializer, InitializingBean {
 
     @Setter(onMethod_ = @Autowired)
     private ProjectConfigurationProperties projectConfigurationProperties;
@@ -66,7 +70,27 @@ public class ResourceAccessJsonSerializer extends JsonSerializer<String> impleme
 
 
     private String splicing(String uri) {
-        return this.projectConfigurationProperties.getFileUploadServerBaseUrl() + uri.trim();
+        return String.format(
+                "%s?%s=%s",
+                this.projectConfigurationProperties.getFileAccessAddress(),
+                FileController.PARAM_NAME,
+                uri.trim()
+        );
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        final String fileAccessAddress = this.projectConfigurationProperties.getFileAccessAddress();
+
+        if (!StringUtils.hasText(fileAccessAddress)) {
+            throw new IllegalArgumentException("文件访问路径前缀未设置: ProjectConfigurationProperties.fileAccessAddress");
+        }
+
+        try {
+            new URL(fileAccessAddress);
+        } catch (MalformedURLException e) {
+            throw new IllegalArgumentException("文件访问路径前缀无效", e);
+        }
     }
 
 }

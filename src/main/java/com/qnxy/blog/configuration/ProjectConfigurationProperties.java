@@ -4,6 +4,8 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
+import java.nio.file.Path;
+
 /**
  * 项目属性配置信息
  *
@@ -15,9 +17,15 @@ import org.springframework.context.annotation.Configuration;
 public class ProjectConfigurationProperties {
 
     /**
-     * 文件服务器地址
+     * 文件访问地址前缀
      */
-    private String fileUploadServerBaseUrl;
+    private String fileAccessAddress;
+
+    /**
+     * 文件上传路径
+     */
+    private Path fileUploadPath;
+
 
     /**
      * 敏感数据 AES 加密密钥

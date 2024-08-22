@@ -1,5 +1,8 @@
 package com.qnxy.blog.data.resp;
 
+import com.qnxy.blog.core.annotations.ResourceAccess;
+import lombok.Data;
+
 import java.util.List;
 
 /**
@@ -7,9 +10,20 @@ import java.util.List;
  *
  * @author Qnxy
  */
-public record UploadResp(List<UploadItem> uploadItemList) {
+public record UploadResp(
+        List<UploadItem> uploadItemList
+) {
 
-    public record UploadItem(String fileUri, String fileUrl) {
+    @Data
+    public static final class UploadItem {
+        private final String fileUri;
+        @ResourceAccess
+        private final String fileUrl;
+
+        public UploadItem(String fileUri) {
+            this.fileUri = fileUri;
+            this.fileUrl = fileUri;
+        }
     }
 
 }

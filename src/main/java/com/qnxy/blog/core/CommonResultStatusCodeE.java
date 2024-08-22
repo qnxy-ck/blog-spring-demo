@@ -19,13 +19,12 @@ public enum CommonResultStatusCodeE implements ResultStatusCode {
     UNAUTHORIZED_ACCESS("C00005", "未授权的访问: {0}"),
     INCORRECT_ACCOUNT_OR_PASSWORD("C00006", "账号或密码错误"),
     SIGNATURE_VERIFICATION_EXCEPTION("C00007", "签名验证异常"),
-    FILE_UPLOAD_FAILED("C00008", "文件上传失败"),
-    PARAMETER_VERIFICATION_FAILED("C00009", "参数校验不通过"),
-    DATA_ADDITION_FAILED("C00010", "数据添加失败"),
-    DATA_UPDATE_FAILED("C00011", "数据更新失败"),
-    DATA_DELETION_FAILED("C00012", "数据删除失败"),
-    ACCESS_RESOURCE_DOES_NOT_EXIST("C00013", "访问资源不存在: [{0}]"),
-    SENSITIVE_DATA_PROCESSING_FAILED("C00014", "敏感数据处理失败"),
+    PARAMETER_VERIFICATION_FAILED("C00008", "参数校验不通过"),
+    DATA_ADDITION_FAILED("C0009", "数据添加失败"),
+    DATA_UPDATE_FAILED("C00010", "数据更新失败"),
+    DATA_DELETION_FAILED("C00011", "数据删除失败"),
+    ACCESS_RESOURCE_DOES_NOT_EXIST("C00012", "访问资源不存在: [{0}]"),
+    SENSITIVE_DATA_PROCESSING_FAILED("C00013", "敏感数据处理失败"),
 
 
     ;
