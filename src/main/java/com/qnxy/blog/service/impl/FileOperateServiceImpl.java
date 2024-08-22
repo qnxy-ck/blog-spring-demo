@@ -35,7 +35,10 @@ import static com.qnxy.blog.core.VerificationExpectations.expectTrue;
 public class FileOperateServiceImpl implements FileOperateService, InitializingBean {
 
     private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy_MM_dd");
-    private static final ExecutorService UPLOAD_EXECUTOR_SERVICE = Executors.newFixedThreadPool(5);
+
+    private static final ExecutorService UPLOAD_EXECUTOR_SERVICE = Executors.newFixedThreadPool(
+            Math.min(Runtime.getRuntime().availableProcessors(), 5)
+    );
 
     private final ProjectConfigurationProperties projectConfigurationProperties;
 
@@ -46,7 +49,7 @@ public class FileOperateServiceImpl implements FileOperateService, InitializingB
     /**
      * 支持多线程同时上传
      * <p>
-     * 当需要上传数量大于一的时候会多线程同时上传, 最大并发为 5
+     * 当需要上传数量大于一的时候会多线程同时上传, 如果支持最大并发为 5. 否则使用当前机器的所有可用线程
      *
      * @param map key 需要上传的内容, value 文件实际的后缀
      */
