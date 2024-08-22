@@ -1,10 +1,11 @@
 package com.qnxy.blog.service;
 
-import com.qnxy.blog.data.resp.UploadResp;
+import com.qnxy.blog.data.resp.FileUploadResp;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,7 +20,7 @@ public interface FileOperateService {
      * @return 上传成功返回文件地址
      * @throws IOException 如果失败抛出该异常
      */
-    UploadResp multipleFileUpload(Map<InputStream, String> map) throws IOException;
+    List<FileUploadResp> multipleFileUpload(Map<InputStream, String> map) throws IOException;
 
     /**
      * 文件访问

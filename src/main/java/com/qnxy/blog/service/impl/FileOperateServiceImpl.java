@@ -1,8 +1,9 @@
 package com.qnxy.blog.service.impl;
 
 import com.qnxy.blog.configuration.ProjectConfigurationProperties;
+import com.qnxy.blog.core.BizException;
 import com.qnxy.blog.core.enums.BizResultStatusCodeE;
-import com.qnxy.blog.data.resp.UploadResp;
+import com.qnxy.blog.data.resp.FileUploadResp;
 import com.qnxy.blog.service.FileOperateService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,10 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import static com.qnxy.blog.core.VerificationExpectations.expectTrue;
 
@@ -30,6 +35,7 @@ import static com.qnxy.blog.core.VerificationExpectations.expectTrue;
 public class FileOperateServiceImpl implements FileOperateService, InitializingBean {
 
     private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy_MM_dd");
+    private static final ExecutorService UPLOAD_EXECUTOR_SERVICE = Executors.newFixedThreadPool(5);
 
     private final ProjectConfigurationProperties projectConfigurationProperties;
 
@@ -37,18 +43,44 @@ public class FileOperateServiceImpl implements FileOperateService, InitializingB
         return LocalDate.now().format(dtf);
     }
 
+    /**
+     * 支持多线程同时上传
+     * <p>
+     * 当需要上传数量大于一的时候会多线程同时上传, 最大并发为 5
+     *
+     * @param map key 需要上传的内容, value 文件实际的后缀
+     */
     @Override
-    public UploadResp multipleFileUpload(Map<InputStream, String> map) throws IOException {
+    public List<FileUploadResp> multipleFileUpload(Map<InputStream, String> map) throws IOException {
 
-        final List<UploadResp.UploadItem> uploadItems = new ArrayList<>();
+        if (map.size() == 1) {
+            return List.of(
+                    this.uploadFile(
+                            map.keySet().iterator().next(),
+                            map.values().iterator().next()
+                    )
+            );
+        }
+
+
+        final List<Future<FileUploadResp>> uploadItemFutureList = new ArrayList<>();
         for (InputStream inputStream : map.keySet()) {
             final String suffix = map.get(inputStream);
 
-            final UploadResp.UploadItem uploadItem = this.uploadFile(inputStream, suffix);
-            uploadItems.add(uploadItem);
+            uploadItemFutureList.add(
+                    UPLOAD_EXECUTOR_SERVICE.submit(() -> this.uploadFile(inputStream, suffix))
+            );
         }
 
-        return new UploadResp(uploadItems);
+        return uploadItemFutureList.stream()
+                .map(it -> {
+                    try {
+                        return it.get();
+                    } catch (InterruptedException | ExecutionException e) {
+                        throw new BizException(e, BizResultStatusCodeE.FILE_UPLOAD_FAILED);
+                    }
+                })
+                .toList();
     }
 
     @Override
@@ -72,7 +104,7 @@ public class FileOperateServiceImpl implements FileOperateService, InitializingB
         FileCopyUtils.copy(Files.newInputStream(path), response.getOutputStream());
     }
 
-    private UploadResp.UploadItem uploadFile(InputStream inputStream, String fileSuffix) throws IOException {
+    private FileUploadResp uploadFile(InputStream inputStream, String fileSuffix) throws IOException {
 
         final String currentDateStr = currentDateStr();
 
@@ -100,7 +132,7 @@ public class FileOperateServiceImpl implements FileOperateService, InitializingB
 
         // 返回文件名
         // 当前日期加生成的文件名
-        return new UploadResp.UploadItem(
+        return new FileUploadResp(
                 String.format(
                         "/%s/%s",
                         currentDateStr,

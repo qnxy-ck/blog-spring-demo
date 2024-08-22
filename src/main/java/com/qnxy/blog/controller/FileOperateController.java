@@ -1,6 +1,7 @@
 package com.qnxy.blog.controller;
 
 import com.qnxy.blog.core.enums.BizResultStatusCodeE;
+import com.qnxy.blog.data.resp.FileUploadResp;
 import com.qnxy.blog.data.resp.UploadResp;
 import com.qnxy.blog.service.FileOperateService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -11,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.qnxy.blog.core.VerificationExpectations.expectNonNull;
@@ -52,7 +54,7 @@ public class FileOperateController {
      * 返回上传资源列表为上传顺序
      */
     @PostMapping("/multiple")
-    public UploadResp multipleFileUpload(MultipartFile[] file) {
+    public List<FileUploadResp> multipleFileUpload(MultipartFile[] file) {
         return expectNotException(
                 () -> {
                     final Map<InputStream, String> map = new LinkedHashMap<>();
