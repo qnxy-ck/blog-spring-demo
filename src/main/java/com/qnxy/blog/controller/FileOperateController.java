@@ -2,7 +2,6 @@ package com.qnxy.blog.controller;
 
 import com.qnxy.blog.core.enums.BizResultStatusCodeE;
 import com.qnxy.blog.data.resp.FileUploadResp;
-import com.qnxy.blog.data.resp.UploadResp;
 import com.qnxy.blog.service.FileOperateService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +36,7 @@ public class FileOperateController {
      * 单文件上传
      */
     @PostMapping("/upload")
-    public UploadResp singleFileUpload(MultipartFile file) {
+    public List<FileUploadResp> singleFileUpload(MultipartFile file) {
         final String filename = expectNonNull(file.getOriginalFilename(), UPLOAD_FILE_NAME_CANNOT_BE_EMPTY);
         final String fileSuffix = filename.substring(filename.lastIndexOf("."));
 
