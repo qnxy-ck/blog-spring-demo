@@ -10,6 +10,9 @@ mybatis:
     map-underscore-to-camel-case: true
     default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
 
+server:
+  port: 8080
+
 logging:
   level:
     com.qnxy.blog.mapper: debug
@@ -25,8 +28,9 @@ blog:
       jwt-expiration-time: 1H
       jwt-payload-key: info
       request-header-token-name: Authorization
-    file-upload-server-base-url: http://localhost:7701/file-server
     sensitive-aes-key: eiSXt2zq4m6+8mkI
     sensitive-sm4-key: BAmrd0j61deyczILL2FPBg==
+    file-upload-path: C:/blog_upload
+    file-access-address: http://${server.address:localhost}:${server.port:8080}${spring.mvc.servlet.path:}/file
 
 
