@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.ContextualSerializer;
 import com.qnxy.blog.configuration.ProjectConfigurationProperties;
-import com.qnxy.blog.controller.FileController;
+import com.qnxy.blog.controller.FileOperateController;
 import com.qnxy.blog.core.annotations.ResourceAccess;
 import lombok.Setter;
 import org.springframework.beans.factory.InitializingBean;
@@ -73,7 +73,7 @@ public class ResourceAccessJsonSerializer extends JsonSerializer<String> impleme
         return String.format(
                 "%s?%s=%s",
                 this.projectConfigurationProperties.getFileAccessAddress(),
-                FileController.PARAM_NAME,
+                FileOperateController.PARAM_NAME,
                 uri.trim()
         );
     }
