@@ -46,23 +46,23 @@ public final class PageReq<REQUEST_DATA> {
 
 
     public int getOffset() {
-        if (this.pageNum <= 0) {
-            return 1;
-        } else {
-            return (this.pageNum - 1) * this.getPageSize();
-        }
+        return (this.getPageNum() - 1) * this.getPageSize();
     }
 
     public int getLimit() {
-        if (this.pageSize <= 0) {
-            return 10;
+        return this.getPageSize();
+    }
+
+    public int getPageNum() {
+        if (this.pageNum <= 0) {
+            return 1;
         }
 
-        return Math.min(this.pageSize, PAGE_ITEMS_MAX_NUMBER);
+        return pageNum;
     }
 
     public int getPageSize() {
-        return Math.min(this.pageSize, PAGE_ITEMS_MAX_NUMBER);
+        return this.pageSize <= 0 ? 10 : Math.min(this.pageSize, PAGE_ITEMS_MAX_NUMBER);
     }
 
     /**
@@ -149,23 +149,8 @@ public final class PageReq<REQUEST_DATA> {
     public <DATA> DATA queryData(Function<REQUEST_DATA, DATA> function) {
         Objects.requireNonNull(function);
 
-        try (Page<Object> ignored = PageHelper.startPage(this.getPageNum(), this.getPageSize(), queryCount)) {
-            return function.apply(reqData);
-        }
+        return function.apply(reqData);
     }
-
-    public <DATA> DATA queryDataNoCount(BiFunction<RowBounds, REQUEST_DATA, DATA> biFunction) {
-        Objects.requireNonNull(biFunction);
-
-        return biFunction.apply(toRowBounds(), reqData);
-    }
-
-    public <DATA> DATA queryDataNoCount(Function<REQUEST_DATA, DATA> function) {
-        Objects.requireNonNull(function);
-
-        try (Page<Object> ignored = PageHelper.startPage(this.getPageNum(), this.getPageSize(), false)) {
-            return function.apply(reqData);
-        }
-    }
+    
 
 }
