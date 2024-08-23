@@ -14,8 +14,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.qnxy.blog.core.VerificationExpectations.expectNonNull;
-import static com.qnxy.blog.core.VerificationExpectations.expectNotException;
+import static com.qnxy.blog.core.VerificationExpectations.*;
 import static com.qnxy.blog.core.enums.BizResultStatusCodeE.UPLOAD_FILE_NAME_CANNOT_BE_EMPTY;
 
 /**
@@ -40,9 +39,8 @@ public class FileOperateController {
         final String filename = expectNonNull(file.getOriginalFilename(), UPLOAD_FILE_NAME_CANNOT_BE_EMPTY);
         final String fileSuffix = filename.substring(filename.lastIndexOf("."));
 
-        return expectNotException(
+        return expectNotIOException(
                 () -> this.fileOperateService.multipleFileUpload(Map.of(file.getInputStream(), fileSuffix)),
-                IOException.class,
                 BizResultStatusCodeE.FILE_UPLOAD_FAILED
         );
     }
@@ -54,7 +52,7 @@ public class FileOperateController {
      */
     @PostMapping("/multiple")
     public List<FileUploadResp> multipleFileUpload(MultipartFile[] file) {
-        return expectNotException(
+        return expectNotIOException(
                 () -> {
                     final Map<InputStream, String> map = new LinkedHashMap<>();
                     for (MultipartFile multipartFile : file) {
@@ -64,7 +62,6 @@ public class FileOperateController {
                     }
                     return this.fileOperateService.multipleFileUpload(map);
                 },
-                IOException.class,
                 BizResultStatusCodeE.FILE_UPLOAD_FAILED
         );
     }

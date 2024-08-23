@@ -3,6 +3,7 @@ package com.qnxy.blog.core;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.Callable;
 
@@ -118,6 +119,14 @@ public final class VerificationExpectations {
             func.call();
             return null;
         }, s, args);
+    }
+
+    public static <S extends Enum<S> & ResultStatusCode> void expectNotIOException(VoidCallable func, S s, Object... args) {
+        expectNotException(func, IOException.class, s, args);
+    }
+
+    public static <S extends Enum<S> & ResultStatusCode, T> T expectNotIOException(Callable<T> execute, S s, Object... args) {
+        return expectNotException(execute, IOException.class, s, args);
     }
 
 

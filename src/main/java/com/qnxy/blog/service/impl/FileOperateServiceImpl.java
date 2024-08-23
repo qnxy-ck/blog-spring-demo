@@ -2,6 +2,7 @@ package com.qnxy.blog.service.impl;
 
 import com.qnxy.blog.configuration.ProjectConfigurationProperties;
 import com.qnxy.blog.core.BizException;
+import com.qnxy.blog.core.DateTimeFormatterConst;
 import com.qnxy.blog.core.enums.BizResultStatusCodeE;
 import com.qnxy.blog.data.resp.FileUploadResp;
 import com.qnxy.blog.service.FileOperateService;
@@ -18,7 +19,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -34,16 +34,14 @@ import static com.qnxy.blog.core.VerificationExpectations.expectTrue;
 @RequiredArgsConstructor
 public class FileOperateServiceImpl implements FileOperateService, InitializingBean {
 
-    private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy_MM_dd");
-
     private static final ExecutorService UPLOAD_EXECUTOR_SERVICE = Executors.newFixedThreadPool(
             Math.min(Runtime.getRuntime().availableProcessors(), 5)
     );
 
     private final ProjectConfigurationProperties projectConfigurationProperties;
 
-    private static String currentDateStr() {
-        return LocalDate.now().format(dtf);
+    private static String currentDatePath() {
+        return LocalDate.now().format(DateTimeFormatterConst.DEFAULT_DATE_PATH_FORMATTER);
     }
 
     /**
@@ -102,14 +100,14 @@ public class FileOperateServiceImpl implements FileOperateService, InitializingB
             inline 直接在浏览器打开
             attachment 直接下载
          */
-        response.setHeader("Content-Disposition", "inline;filename*=UTF-8''" + path.getFileName());
+        response.setHeader("Content-Disposition", "inline;filename=" + path.getFileName());
 
         FileCopyUtils.copy(Files.newInputStream(path), response.getOutputStream());
     }
 
     private FileUploadResp uploadFile(InputStream inputStream, String fileSuffix) throws IOException {
 
-        final String currentDateStr = currentDateStr();
+        final String currentDateStr = currentDatePath();
 
         // 配置路径加当前日期 判断是否存在, 如果不存在则创建该路径 
         Path path = Paths.get(
