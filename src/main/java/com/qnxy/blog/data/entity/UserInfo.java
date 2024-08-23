@@ -2,8 +2,8 @@ package com.qnxy.blog.data.entity;
 
 import com.qnxy.blog.core.annotations.Desensitization;
 import com.qnxy.blog.core.annotations.Desensitization.ValueType;
+import com.qnxy.blog.core.annotations.FieldSensitive;
 import com.qnxy.blog.core.annotations.ResourceAccess;
-import com.qnxy.blog.core.annotations.Sensitive;
 import com.qnxy.blog.data.GenderType;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -36,7 +36,7 @@ public class UserInfo {
     /**
      * 用户手机号
      */
-    @Sensitive
+    @FieldSensitive
     @Desensitization(ValueType.PHONE_NUMBER)
     private String phoneNum;
 
