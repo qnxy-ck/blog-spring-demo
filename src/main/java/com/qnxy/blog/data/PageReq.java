@@ -154,4 +154,18 @@ public final class PageReq<REQUEST_DATA> {
         }
     }
 
+    public <DATA> DATA queryDataNoCount(BiFunction<RowBounds, REQUEST_DATA, DATA> biFunction) {
+        Objects.requireNonNull(biFunction);
+
+        return biFunction.apply(toRowBounds(), reqData);
+    }
+
+    public <DATA> DATA queryDataNoCount(Function<REQUEST_DATA, DATA> function) {
+        Objects.requireNonNull(function);
+
+        try (Page<Object> ignored = PageHelper.startPage(this.getPageNum(), this.getPageSize(), false)) {
+            return function.apply(reqData);
+        }
+    }
+
 }
