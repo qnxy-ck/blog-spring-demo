@@ -4,7 +4,7 @@ import com.qnxy.blog.core.BizException;
 import com.qnxy.blog.core.CommonResultStatusCodeE;
 import com.qnxy.blog.core.annotations.IgnoreAuth;
 import com.qnxy.blog.core.annotations.NoIgnoreAuth;
-import com.qnxy.blog.service.AuthorizeService;
+import com.qnxy.blog.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +22,7 @@ import java.util.Map;
 /**
  * @author Qnxy
  */
+@SuppressWarnings("NullableProblems")
 @Component
 @RequiredArgsConstructor
 public class JwtAuthHandlerInterceptor implements HandlerInterceptor {
@@ -29,7 +30,7 @@ public class JwtAuthHandlerInterceptor implements HandlerInterceptor {
     private static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
 
     private final AuthenticationConfigurationProperties authenticationConfigurationProperties;
-    private final AuthorizeService authorizeService;
+    private final UserService userService;
 
 
     @Override
@@ -61,7 +62,8 @@ public class JwtAuthHandlerInterceptor implements HandlerInterceptor {
             throw new BizException(CommonResultStatusCodeE.UNAUTHORIZED_ACCESS, "未找到token");
         }
 
-        return this.authorizeService.checkJwtToken(authToken);
+        this.userService.checkJwtTokenAndParse(authToken);
+        return true;
     }
 
 

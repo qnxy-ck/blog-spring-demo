@@ -11,11 +11,10 @@
                 #{userInfo.birthday})
     </insert>
 
-    <select id="selectByUsernameAndPassword" resultType="com.qnxy.blog.data.entity.UserInfo">
-        select *
+    <select id="selectByUsername" resultType="com.qnxy.blog.data.entity.UserInfo">
+        select id, password
         from user_info
         where username = #{username}
-          and password = #{password}
     </select>
     <select id="selectByPrimaryKey" resultType="com.qnxy.blog.data.entity.UserInfo">
         select *

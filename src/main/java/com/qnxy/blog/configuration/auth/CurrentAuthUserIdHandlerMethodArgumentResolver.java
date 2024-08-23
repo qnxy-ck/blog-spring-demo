@@ -1,7 +1,7 @@
 package com.qnxy.blog.configuration.auth;
 
 import com.qnxy.blog.data.CurrentAuthUserId;
-import com.qnxy.blog.service.AuthorizeService;
+import com.qnxy.blog.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
@@ -15,13 +15,14 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 /**
  * @author Qnxy
  */
+@SuppressWarnings("NullableProblems")
 @Component
 @Slf4j
 @RequiredArgsConstructor
 public class CurrentAuthUserIdHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {
 
     private final AuthenticationConfigurationProperties authenticationConfigurationProperties;
-    private final AuthorizeService authorizeService;
+    private final UserService userService;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -37,7 +38,7 @@ public class CurrentAuthUserIdHandlerMethodArgumentResolver implements HandlerMe
             return CurrentAuthUserId.create(null);
         }
 
-        final Long userId = this.authorizeService.userIdFromJwtToken(authToken);
+        final Long userId = this.userService.checkJwtTokenAndParse(authToken);
         return CurrentAuthUserId.create(userId);
     }
 }

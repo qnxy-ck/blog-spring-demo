@@ -6,15 +6,17 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.qnxy.blog.configuration.auth.AuthenticationConfigurationProperties;
+import com.qnxy.blog.core.BeanCopy;
 import com.qnxy.blog.core.BizException;
 import com.qnxy.blog.core.CommonResultStatusCodeE;
 import com.qnxy.blog.data.entity.UserInfo;
 import com.qnxy.blog.data.req.auth.AuthReq;
+import com.qnxy.blog.data.req.user.RegisterInfoReq;
 import com.qnxy.blog.mapper.UserInfoMapper;
-import com.qnxy.blog.service.AuthorizeService;
+import com.qnxy.blog.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.InitializingBean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -23,6 +25,9 @@ import java.time.ZoneOffset;
 import java.util.Optional;
 
 import static com.qnxy.blog.core.CommonResultStatusCodeE.INCORRECT_ACCOUNT_OR_PASSWORD;
+import static com.qnxy.blog.core.VerificationExpectations.expectFalse;
+import static com.qnxy.blog.core.VerificationExpectations.expectInsertOk;
+import static com.qnxy.blog.core.enums.BizResultStatusCodeE.ACCOUNT_NAME_ALREADY_EXISTS;
 
 /**
  * @author Qnxy
@@ -30,16 +35,20 @@ import static com.qnxy.blog.core.CommonResultStatusCodeE.INCORRECT_ACCOUNT_OR_PA
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class AuthorizeServiceImpl implements AuthorizeService, InitializingBean {
+public class UserServiceImpl implements UserService {
+
+    private static final BCryptPasswordEncoder DEFAULT_PASSWORD_ENCODER = new BCryptPasswordEncoder(11);
 
     private final UserInfoMapper userInfoMapper;
     private final AuthenticationConfigurationProperties authenticationConfigurationProperties;
-    private JWTVerifier jwtVerifier;
+    private final Algorithm jwtAlgorithm;
+    private final JWTVerifier jwtVerifier;
 
 
     @Override
     public String login(AuthReq authReq) {
-        final Long userInfoId = Optional.ofNullable(this.userInfoMapper.selectByUsernameAndPassword(authReq.getUsername(), authReq.getPassword()))
+        final Long userInfoId = Optional.ofNullable(this.userInfoMapper.selectByUsername(authReq.getUsername()))
+                .filter(it -> DEFAULT_PASSWORD_ENCODER.matches(authReq.getPassword(), it.getPassword()))
                 .map(UserInfo::getId)
                 .orElseThrow(INCORRECT_ACCOUNT_OR_PASSWORD.createSupplierEx());
 
@@ -51,21 +60,23 @@ public class AuthorizeServiceImpl implements AuthorizeService, InitializingBean 
                 .withClaim(this.authenticationConfigurationProperties.getJwtPayloadKey(), userInfoId)
                 .withExpiresAt(expires)
                 .withIssuer(this.authenticationConfigurationProperties.getJwtIssuer())
-                .sign(Algorithm.HMAC256(this.authenticationConfigurationProperties.getJwtSecret()));
+                .sign(jwtAlgorithm);
+    }
+
+
+    @Override
+    public void registerAccount(RegisterInfoReq registerInfoReq) {
+        expectFalse(this.userInfoMapper.selectExistByUsername(registerInfoReq.getUsername()), ACCOUNT_NAME_ALREADY_EXISTS);
+
+        final UserInfo userInfo = BeanCopy.copyValue(registerInfoReq, new UserInfo());
+        final String encodePassword = DEFAULT_PASSWORD_ENCODER.encode(userInfo.getPassword());
+        userInfo.setPassword(encodePassword);
+
+        expectInsertOk(this.userInfoMapper.insertUserInfo(userInfo));
     }
 
     @Override
-    public boolean checkJwtToken(String token) {
-        try {
-            this.jwtVerifier.verify(token);
-        } catch (JWTVerificationException e) {
-            throw new BizException(e, CommonResultStatusCodeE.SIGNATURE_VERIFICATION_EXCEPTION);
-        }
-        return true;
-    }
-
-    @Override
-    public Long userIdFromJwtToken(String token) {
+    public Long checkJwtTokenAndParse(String token) {
         try {
             final DecodedJWT verify = this.jwtVerifier.verify(token);
             return verify.getClaim(this.authenticationConfigurationProperties.getJwtPayloadKey()).asLong();
@@ -74,9 +85,4 @@ public class AuthorizeServiceImpl implements AuthorizeService, InitializingBean 
         }
     }
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        Algorithm algorithm = Algorithm.HMAC256(this.authenticationConfigurationProperties.getJwtSecret());
-        this.jwtVerifier = JWT.require(algorithm).build();
-    }
 }
