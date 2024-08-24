@@ -12,6 +12,7 @@ import com.qnxy.blog.core.CommonResultStatusCodeE;
 import com.qnxy.blog.data.entity.UserInfo;
 import com.qnxy.blog.data.req.auth.AuthReq;
 import com.qnxy.blog.data.req.user.RegisterInfoReq;
+import com.qnxy.blog.data.req.user.UpdateInfoReq;
 import com.qnxy.blog.mapper.UserInfoMapper;
 import com.qnxy.blog.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -22,11 +23,12 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static com.qnxy.blog.core.CommonResultStatusCodeE.INCORRECT_ACCOUNT_OR_PASSWORD;
-import static com.qnxy.blog.core.VerificationExpectations.expectFalse;
-import static com.qnxy.blog.core.VerificationExpectations.expectInsertOk;
+import static com.qnxy.blog.core.VerificationExpectations.*;
 import static com.qnxy.blog.core.enums.BizResultStatusCodeE.ACCOUNT_NAME_ALREADY_EXISTS;
 
 /**
@@ -83,6 +85,24 @@ public class UserServiceImpl implements UserService {
         } catch (JWTVerificationException e) {
             throw new BizException(e, CommonResultStatusCodeE.SIGNATURE_VERIFICATION_EXCEPTION);
         }
+    }
+
+    @Override
+    public void updateUserInfo(Long userId, UpdateInfoReq updateInfoReq) {
+        boolean b = Stream.of(
+                        updateInfoReq.getUserAvatar(),
+                        updateInfoReq.getProfession(),
+                        updateInfoReq.getGender(),
+                        updateInfoReq.getPersonalDescription()
+                )
+                .allMatch(Objects::isNull);
+
+        if (b) {
+            // 全部为空, 无需修改
+            return;
+        }
+
+        expectUpdateOk(this.userInfoMapper.updateUserInfoById(userId, updateInfoReq));
     }
 
 }

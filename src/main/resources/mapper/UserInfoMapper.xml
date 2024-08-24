@@ -19,6 +19,23 @@
                 #{userInfo.profession},
                 #{userInfo.personalDescription})
     </insert>
+    <update id="updateUserInfoById">
+        update user_info
+        <set>
+            <if test="info.userAvatar != null">
+                user_avatar = #{info.userAvatar},
+            </if>
+            <if test="info.gender == null">
+                gender = #{info.gender},
+            </if>
+            <if test="info.profession == null">
+                profession = #{info.profession},
+            </if>
+            personal_description = #{info.personalDescription}
+        </set>
+        where id = #{userId}
+        and deleted = false
+    </update>
 
     <select id="selectByUsername" resultType="com.qnxy.blog.data.entity.UserInfo">
         select id, password

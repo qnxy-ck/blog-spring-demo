@@ -1,6 +1,7 @@
 package com.qnxy.blog.mapper;
 
 import com.qnxy.blog.data.entity.UserInfo;
+import com.qnxy.blog.data.req.user.UpdateInfoReq;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -32,4 +33,5 @@ public interface UserInfoMapper {
      */
     boolean insertUserInfo(@Param("userInfo") UserInfo userInfo);
 
+    boolean updateUserInfoById(Long userId, @Param("info") UpdateInfoReq infoReq);
 }

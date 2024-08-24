@@ -2,6 +2,7 @@ package com.qnxy.blog.service;
 
 import com.qnxy.blog.data.req.auth.AuthReq;
 import com.qnxy.blog.data.req.user.RegisterInfoReq;
+import com.qnxy.blog.data.req.user.UpdateInfoReq;
 
 /**
  * @author Qnxy
@@ -28,5 +29,13 @@ public interface UserService {
      */
     Long checkJwtTokenAndParse(String token);
 
+
+    /**
+     * 用户信息修改
+     *
+     * @param userId        用户id
+     * @param updateInfoReq 修改信息
+     */
+    void updateUserInfo(Long userId, UpdateInfoReq updateInfoReq);
 
 }

@@ -1,8 +1,10 @@
 package com.qnxy.blog.controller.user;
 
 import com.qnxy.blog.core.annotations.IgnoreAuth;
+import com.qnxy.blog.data.CurrentAuthUserId;
 import com.qnxy.blog.data.req.auth.AuthReq;
 import com.qnxy.blog.data.req.user.RegisterInfoReq;
+import com.qnxy.blog.data.req.user.UpdateInfoReq;
 import com.qnxy.blog.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -12,12 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 用户授权
+ * 用户相关
  *
  * @author Qnxy
  */
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -42,6 +44,14 @@ public class UserController {
     @IgnoreAuth
     public void register(@RequestBody @Validated RegisterInfoReq registerInfoReq) {
         this.userService.registerAccount(registerInfoReq);
+    }
+
+    /**
+     * 用户信息修改
+     */
+    @PostMapping("/update")
+    public void updateUserInfo(@RequestBody @Validated UpdateInfoReq updateInfoReq, CurrentAuthUserId authUserId) {
+        this.userService.updateUserInfo(authUserId.getUserId(), updateInfoReq);
     }
 
 
