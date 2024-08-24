@@ -43,7 +43,7 @@ public class RegisterInfoReq {
      * 用户手机号
      */
     @Pattern(regexp = "^1\\d{10}$", message = "输入手机号格式不正确")
-    private String phoneNun;
+    private String phoneNum;
 
     /**
      * 用户头像
