@@ -1,5 +1,6 @@
 package com.qnxy.blog.controller;
 
+import com.qnxy.blog.core.annotations.IgnoreAuth;
 import com.qnxy.blog.core.enums.BizResultStatusCodeE;
 import com.qnxy.blog.data.resp.FileUploadResp;
 import com.qnxy.blog.service.FileOperateService;
@@ -74,6 +75,7 @@ public class FileOperateController {
      * @param response .
      */
     @GetMapping
+    @IgnoreAuth
     public void accessFile(@RequestParam(PARAM_NAME) String filePath, HttpServletResponse response) {
         expectNotException(
                 () -> this.fileOperateService.accessFile(filePath, response),
