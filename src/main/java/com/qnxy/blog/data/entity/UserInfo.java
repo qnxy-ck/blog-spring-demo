@@ -57,6 +57,17 @@ public class UserInfo {
     private LocalDate birthday;
 
     /**
+     * 职业
+     */
+    private String profession;
+
+    /**
+     * 个人描述
+     */
+    private String personalDescription;
+
+
+    /**
      * 是否删除, 删除为true
      */
     private boolean deleted;

@@ -2,13 +2,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.qnxy.blog.mapper.UserInfoMapper">
     <insert id="insertUserInfo">
-        insert into user_info (username, password, phone_num, user_avatar, gender, birthday)
+        insert into user_info (username,
+                               password,
+                               phone_num,
+                               user_avatar,
+                               gender,
+                               birthday,
+                               profession,
+                               personal_description)
         values (#{userInfo.username},
                 #{userInfo.password},
                 #{userInfo.phoneNum},
                 #{userInfo.userAvatar},
                 #{userInfo.gender},
-                #{userInfo.birthday})
+                #{userInfo.birthday},
+                #{userInfo.profession},
+                #{userInfo.personalDescription})
     </insert>
 
     <select id="selectByUsername" resultType="com.qnxy.blog.data.entity.UserInfo">

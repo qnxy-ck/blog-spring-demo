@@ -12,6 +12,8 @@ import org.hibernate.validator.constraints.Length;
 import java.time.LocalDate;
 
 /**
+ * 用户注册请求信息
+ * 
  * @author Qnxy
  */
 @Data
@@ -61,6 +63,17 @@ public class RegisterInfoReq {
     @NotNull(message = "生日不能为空")
     @Past(message = "生日日期不能是以后的日期")
     private LocalDate birthday;
+
+    /**
+     * 职业
+     */
+    @NotBlank(message = "个人职业不能为空")
+    private String profession;
+
+    /**
+     * 个人描述
+     */
+    private String personalDescription;
 
 
 }
