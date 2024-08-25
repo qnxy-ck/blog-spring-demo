@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qnxy.blog.mapper.FollowInfoMapper">
+    <select id="selectFollowListByUserId" resultType="com.qnxy.blog.data.resp.UserFollowerInfo">
+        select ui.id followerId,
+               ui.username,
+               ui.user_avatar,
+               ui.profession,
+               fi.follow_time
+        from follow_info fi
+                 left join user_info ui on fi.follow_id = ui.id
+        where fi.user_id = #{userId}
+    </select>
+</mapper>
