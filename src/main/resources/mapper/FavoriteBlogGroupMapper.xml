@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qnxy.blog.mapper.FavoriteBlogGroupMapper">
+    <insert id="insertFavoriteBlogGroup">
+        insert into favorite_blog_group(user_id,
+                                        cover,
+                                        name,
+                                        open,
+                                        description)
+        values (#{userId},
+                #{groupParam.cover},
+                #{groupParam.name},
+                #{groupParam.open},
+                #{groupParam.description})
+    </insert>
+    <select id="selectUserIdAndNameExists" resultType="java.lang.Boolean">
+        select count(*)
+        from favorite_blog_group
+        where user_id = #{userId}
+          and name = #{name}
+    </select>
+    <select id="selectGroupListByUserId" resultType="com.qnxy.blog.data.resp.FavoriteBlogGroupResp">
+        select fbg.id,
+               fbg.user_id,
+               fbg.cover,
+               fbg.name,
+               fbg.open,
+               fbg.description,
+               fbg.created_time,
+               count(fb.id) blogCount
+        from favorite_blog_group fbg
+                 left join favorite_blog fb on fbg.id = fb.group_id
+        where user_id = 19
+        group by fbg.id
+    </select>
+
+</mapper>

@@ -13,11 +13,35 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum BizResultStatusCodeE implements ResultStatusCode {
 
+    /**
+     * 账户名已存在
+     */
     ACCOUNT_NAME_ALREADY_EXISTS("B00000"),
+
+    /**
+     * 上传文件名称不能为空
+     */
     UPLOAD_FILE_NAME_CANNOT_BE_EMPTY("B00001"),
+
+    /**
+     * 文件上传失败
+     */
     FILE_UPLOAD_FAILED("B00002"),
+
+    /**
+     * 文件访问失败
+     */
     FILE_ACCESS_FAILED("B00003"),
+
+    /**
+     * 不存在的文件
+     */
     NON_EXISTENT_FILE("B00004"),
+
+    /**
+     * 该分组名称已存在
+     */
+    GROUP_NAME_ALREADY_EXISTS("B00005"),
 
 
     ;
