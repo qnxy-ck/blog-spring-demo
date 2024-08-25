@@ -151,6 +151,10 @@ public final class PageReq<REQUEST_DATA> {
 
         return function.apply(reqData);
     }
-    
+
+
+    public <D> PageReq<D> withData(D data, PageReq<REQUEST_DATA> p) {
+        return new PageReq<>(data, p.getPageNum(), p.getPageSize());
+    }
 
 }
