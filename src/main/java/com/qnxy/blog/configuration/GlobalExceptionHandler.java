@@ -1,4 +1,4 @@
-package com.qnxy.blog.configuration.ex;
+package com.qnxy.blog.configuration;
 
 import com.qnxy.blog.core.BizException;
 import com.qnxy.blog.core.VerificationExpectations;
@@ -44,7 +44,7 @@ public class GlobalExceptionHandler implements InitializingBean {
     private static void buildExceptionHandlerMapping() {
 
         // 自定义异常处理
-        addExceptionHandler(BizException.class, R::ofBizEx);
+        addExceptionHandler(BizException.class, R::ofBizException);
 
         // 参数校验异常处理 @RequestBody
         addExceptionHandler(MethodArgumentNotValidException.class, e -> {
@@ -79,7 +79,7 @@ public class GlobalExceptionHandler implements InitializingBean {
         // MyBatis 框架发出的异常
         addExceptionHandler(NoResourceFoundException.class, e -> {
             if (e.getRootCause() instanceof BizException bizException) {
-                return R.ofBizEx(bizException);
+                return R.ofBizException(bizException);
             }
             return R.fail(UNKNOWN_EXCEPTION);
         });
@@ -87,7 +87,7 @@ public class GlobalExceptionHandler implements InitializingBean {
         // 处理 HttpMessageNotReadableException 异常
         addExceptionHandler(HttpMessageNotReadableException.class, e -> {
             if (e.getRootCause() instanceof BizException bizException) {
-                return R.ofBizEx(bizException);
+                return R.ofBizException(bizException);
             }
 
             return R.fail(UNKNOWN_EXCEPTION);
@@ -150,6 +150,7 @@ public class GlobalExceptionHandler implements InitializingBean {
         log.error("请求路径: {} -> 发生错误: {}", requestURI, msg, printException);
     }
 
+    @SuppressWarnings("RedundantThrows")
     @Override
     public void afterPropertiesSet() throws Exception {
         buildExceptionHandlerMapping();

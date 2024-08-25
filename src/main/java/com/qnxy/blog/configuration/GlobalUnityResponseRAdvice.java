@@ -1,4 +1,4 @@
-package com.qnxy.blog.configuration.result;
+package com.qnxy.blog.configuration;
 
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -26,7 +26,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 @SuppressWarnings("NullableProblems")
 @RestControllerAdvice
 @RequiredArgsConstructor
-public class ResponseRAdvice implements ResponseBodyAdvice<Object> {
+public class GlobalUnityResponseRAdvice implements ResponseBodyAdvice<Object> {
 
     private final ObjectMapper objectMapper;
     private final MessageSource messageSource;
@@ -59,19 +59,29 @@ public class ResponseRAdvice implements ResponseBodyAdvice<Object> {
         }
     }
 
+
+    /**
+     * 支持国际化消息
+     * 返回内容为当前类字段和 {@link R} 类中字段的组合
+     */
     @Data
-    private static class PrivateR {
+    private static final class PrivateR {
+
+        /**
+         * 返回的数据
+         */
+        @JsonUnwrapped
+        private final R<?> data;
+        
+        /**
+         * 返回状态信息
+         */
+        private final String statusMsg;
 
         /**
          * 返回时时间戳
          */
         private final long timestamp = System.currentTimeMillis();
-        @JsonUnwrapped
-        private R<?> data;
-        /**
-         * 返回状态信息
-         */
-        private String statusMsg;
 
         public PrivateR(R<?> data, String message) {
             this.data = data;

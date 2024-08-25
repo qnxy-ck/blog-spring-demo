@@ -3,7 +3,9 @@ package com.qnxy.blog.data;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.qnxy.blog.core.BizException;
 import com.qnxy.blog.core.ResultStatusCode;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 import static com.qnxy.blog.core.CommonResultStatusCodeE.SUCCESSFUL;
 
@@ -13,7 +15,9 @@ import static com.qnxy.blog.core.CommonResultStatusCodeE.SUCCESSFUL;
  * @author Qnxy
  */
 @Data
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class R<DATA> {
+
     /**
      * 返回实际数据
      */
@@ -24,18 +28,15 @@ public final class R<DATA> {
      */
     private final String statusCode;
 
+    /**
+     * 状态码对应国际化信息占位符的参数
+     */
     @JsonIgnore
-    private Object[] args;
+    private final Object[] args;
 
-
-    private R(DATA data, String statusCode, Object... args) {
-        this.data = data;
-        this.statusCode = statusCode;
-        this.args = args;
-    }
 
     public static <DATA> R<DATA> suc(DATA data) {
-        return new R<>(data, SUCCESSFUL.getCode());
+        return new R<>(data, SUCCESSFUL.getCode(), null);
     }
 
     public static <DATA, STATUS extends Enum<STATUS> & ResultStatusCode> R<DATA> fail(STATUS status, Object... args) {
@@ -46,7 +47,7 @@ public final class R<DATA> {
         return new R<>(data, status.getCode(), args);
     }
 
-    public static <DATA> R<DATA> ofBizEx(BizException e) {
+    public static <DATA> R<DATA> ofBizException(BizException e) {
         return new R<>(null, e.getCode(), e.getArgs());
     }
 
