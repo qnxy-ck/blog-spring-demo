@@ -1,24 +1,26 @@
 package com.qnxy.blog.core;
 
+import lombok.Getter;
+
 /**
+ * 自定义异常, 用于全局异常拦截, 特殊处理
+ *
  * @author Qnxy
  */
+@Getter
 public class BizException extends RuntimeException {
 
-    private final Object _status;
+    private final String code;
+    private final Object[] args;
 
     public <STATUS extends Enum<STATUS> & ResultStatusCode> BizException(Exception e, STATUS status, Object... args) {
-        super(status.getFullMessage(args), e);
-        this._status = status;
+        super(e);
+        this.code = status.getCode();
+        this.args = args;
     }
 
     public <STATUS extends Enum<STATUS> & ResultStatusCode> BizException(STATUS status, Object... args) {
         this(null, status, args);
-    }
-
-    public <STATUS extends Enum<STATUS> & ResultStatusCode> STATUS getStatus() {
-        //noinspection unchecked
-        return (STATUS) _status;
     }
 
 

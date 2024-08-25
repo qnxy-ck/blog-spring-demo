@@ -1,6 +1,5 @@
 package com.qnxy.blog.core;
 
-import java.text.MessageFormat;
 import java.util.function.Supplier;
 
 /**
@@ -15,18 +14,6 @@ public interface ResultStatusCode {
      */
     String getCode();
 
-    /**
-     * 状态信息
-     */
-    String getMessage();
-
-
-    default String getFullMessage(Object... args) {
-        if (args == null || args.length == 0) {
-            return getMessage();
-        }
-        return MessageFormat.format(getMessage(), args);
-    }
 
     default BizException createEx(Object... args) {
         return BizException.create(this, args);

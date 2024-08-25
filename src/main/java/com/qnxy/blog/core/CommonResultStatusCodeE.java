@@ -12,23 +12,83 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum CommonResultStatusCodeE implements ResultStatusCode {
 
-    SUCCESSFUL("C00001", "成功"),
-    FAILED("C00002", "失败"),
-    UNKNOWN_EXCEPTION("C00003", "系统未知错误"),
-    JSON_CONVERSION_EXCEPTION("C00004", "Json转换异常"),
-    UNAUTHORIZED_ACCESS("C00005", "未授权的访问: {0}"),
-    INCORRECT_ACCOUNT_OR_PASSWORD("C00006", "账号或密码错误"),
-    SIGNATURE_VERIFICATION_EXCEPTION("C00007", "签名验证异常"),
-    PARAMETER_VERIFICATION_FAILED("C00008", "参数校验不通过"),
-    DATA_ADDITION_FAILED("C0009", "数据添加失败"),
-    DATA_UPDATE_FAILED("C00010", "数据更新失败"),
-    DATA_DELETION_FAILED("C00011", "数据删除失败"),
-    ACCESS_RESOURCE_DOES_NOT_EXIST("C00012", "访问资源不存在: [{0}]"),
-    SENSITIVE_DATA_PROCESSING_FAILED("C00013", "敏感数据处理失败"),
+    /**
+     * 成功
+     */
+    SUCCESSFUL("C00001"),
 
+    /**
+     * 失败
+     */
+    FAILED("C00002"),
+
+    /**
+     * 系统未知错误
+     */
+    UNKNOWN_EXCEPTION("C00003"),
+
+    /**
+     * Json转换异常
+     */
+    JSON_CONVERSION_EXCEPTION("C00004"),
+
+    /**
+     * 未授权的访问
+     */
+    UNAUTHORIZED_ACCESS("C00005"),
+
+    /**
+     * 账号或密码错误
+     */
+    INCORRECT_ACCOUNT_OR_PASSWORD("C00006"),
+
+    /**
+     * 签名验证异常
+     */
+    SIGNATURE_VERIFICATION_EXCEPTION("C00007"),
+
+    /**
+     * 参数校验不通过
+     */
+    PARAMETER_VERIFICATION_FAILED("C00008"),
+
+    /**
+     * 数据添加失败
+     */
+    DATA_ADDITION_FAILED("C00009"),
+
+    /**
+     * 数据更新失败
+     */
+    DATA_UPDATE_FAILED("C00010"),
+
+    /**
+     * 数据删除失败
+     */
+    DATA_DELETION_FAILED("C00011"),
+
+    /**
+     * 访问资源不存在: [{0}]
+     */
+    ACCESS_RESOURCE_DOES_NOT_EXIST("C00012"),
+
+    /**
+     * 敏感数据处理失败
+     */
+    SENSITIVE_DATA_PROCESSING_FAILED("C00013"),
+
+    /**
+     * 不存在的性别参数: [{0}] 仅支持: {1}
+     */
+    GENDER_PARAMETER_DOES_NOT_EXIST("C00014"),
+
+    /**
+     * 不支持的请求方式: [{0}]
+     */
+    UNSUPPORTED_REQUEST_METHOD("C00015"),
 
     ;
+
     private final String code;
-    private final String message;
 
 }

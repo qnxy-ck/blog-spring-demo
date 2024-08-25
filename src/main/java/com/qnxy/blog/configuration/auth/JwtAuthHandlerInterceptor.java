@@ -59,7 +59,7 @@ public class JwtAuthHandlerInterceptor implements HandlerInterceptor {
 
         final String authToken = request.getHeader(this.authenticationConfigurationProperties.getRequestHeaderTokenName());
         if (!StringUtils.hasText(authToken)) {
-            throw new BizException(CommonResultStatusCodeE.UNAUTHORIZED_ACCESS, "未找到token");
+            throw new BizException(CommonResultStatusCodeE.UNAUTHORIZED_ACCESS);
         }
 
         this.userService.checkJwtTokenAndParse(authToken);

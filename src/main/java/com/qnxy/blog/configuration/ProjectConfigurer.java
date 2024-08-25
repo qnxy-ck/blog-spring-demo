@@ -8,21 +8,15 @@ import com.qnxy.blog.configuration.auth.CurrentAuthUserIdHandlerMethodArgumentRe
 import com.qnxy.blog.configuration.auth.JwtAuthHandlerInterceptor;
 import com.qnxy.blog.core.json.LocalDateTimeJsonSerializer;
 import com.qnxy.blog.core.json.LongValueJsonSerializer;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.util.StringUtils;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
-import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
 
 /**
  * @author Qnxy
@@ -31,24 +25,6 @@ import java.util.Optional;
 @Configuration
 @RequiredArgsConstructor
 public class ProjectConfigurer {
-
-    @Bean
-    public LocaleResolver localeResolver() {
-        return new LocaleResolver() {
-
-            @Override
-            public Locale resolveLocale(HttpServletRequest request) {
-                return Optional.ofNullable(request.getHeader("Accept-Language"))
-                        .filter(StringUtils::hasText)
-                        .map(StringUtils::parseLocale)
-                        .orElseGet(() -> new Locale("zh", "CN"));
-            }
-
-            @Override
-            public void setLocale(HttpServletRequest request, HttpServletResponse response, Locale locale) {
-            }
-        };
-    }
 
 
     /**
