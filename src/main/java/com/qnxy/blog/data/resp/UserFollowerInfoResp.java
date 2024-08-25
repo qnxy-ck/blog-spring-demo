@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  * @author Qnxy
  */
 @Data
-public class UserFollowerInfo {
+public class UserFollowerInfoResp {
 
     /**
      * 被关注者ID

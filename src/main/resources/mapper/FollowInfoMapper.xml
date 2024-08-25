@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.qnxy.blog.mapper.FollowInfoMapper">
-    <select id="selectFollowListByUserId" resultType="com.qnxy.blog.data.resp.UserFollowerInfo">
+    <insert id="insertFollowInfo">
+        insert into follow_info (user_id, follow_id)
+        values (#{userId}, #{followId})
+    </insert>
+    <delete id="deleteFollowInfo">
+        delete
+        from follow_info
+        where user_id = #{userId}
+          and follow_id = #{followId}
+    </delete>
+    <select id="selectFollowListByUserId" resultType="com.qnxy.blog.data.resp.UserFollowerInfoResp">
         select ui.id followerId,
                ui.username,
                ui.user_avatar,
