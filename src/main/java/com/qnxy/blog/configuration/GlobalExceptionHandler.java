@@ -6,6 +6,7 @@ import com.qnxy.blog.data.R;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceResolvable;
@@ -77,7 +78,7 @@ public class GlobalExceptionHandler implements InitializingBean {
         addExceptionHandler(HttpRequestMethodNotSupportedException.class, e -> R.fail(UNSUPPORTED_REQUEST_METHOD, e.getMethod()));
 
         // MyBatis 框架发出的异常
-        addExceptionHandler(NoResourceFoundException.class, e -> {
+        addExceptionHandler(MyBatisSystemException.class, e -> {
             if (e.getRootCause() instanceof BizException bizException) {
                 return R.ofBizException(bizException);
             }
