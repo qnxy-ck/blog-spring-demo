@@ -1,4 +1,7 @@
 spring:
+  messages:
+    basename: i18n/result_message
+    use-code-as-default-message: true
   datasource:
     username: root
     password: 123456
@@ -20,12 +23,10 @@ logging:
 
 blog:
   config:
-    ex:
-      enable-exception-stack-trace: true
     auth:
       jwt-secret: admin
       jwt-issuer: qnxy
-      jwt-expiration-time: 1H
+      jwt-expiration-time: 1D
       jwt-payload-key: info
       request-header-token-name: Authorization
     sensitive-aes-key: eiSXt2zq4m6+8mkI
