@@ -152,9 +152,15 @@ public final class PageReq<REQUEST_DATA> {
         return function.apply(reqData);
     }
 
-
-    public <D> PageReq<D> withData(D data, PageReq<REQUEST_DATA> p) {
-        return new PageReq<>(data, p.getPageNum(), p.getPageSize());
+    /**
+     * 使用新的数据创建当前分页数据
+     *
+     * @param data 新的数据
+     */
+    public <D> PageReq<D> withData(D data) {
+        final PageReq<D> dPageReq = new PageReq<>(data, this.pageNum, this.pageSize);
+        dPageReq.setQueryCount(this.queryCount);
+        return dPageReq;
     }
 
 }

@@ -21,9 +21,8 @@ public class FollowInformationServiceImpl implements FollowInformationService {
     private final FollowInfoMapper followInfoMapper;
 
     @Override
-    public PageInfo<UserFollowerInfoResp> followList(Long userId, PageReq<Void> pageReq) {
-        return pageReq.withData(userId, pageReq)
-                .queryPageInfo(this.followInfoMapper::selectFollowListByUserId);
+    public PageInfo<UserFollowerInfoResp> followList(PageReq<Long> pageReq) {
+        return pageReq.queryPageInfo(this.followInfoMapper::selectFollowListByUserId);
     }
 
     @Override

@@ -9,9 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 /**
- *
  * 用户关注信息
- * 
+ *
  * @author Qnxy
  */
 @RestController
@@ -30,7 +29,7 @@ public class FollowInformationController {
      */
     @PostMapping("/list")
     public PageInfo<UserFollowerInfoResp> followList(CurrentAuthUserId authUserId, @RequestBody PageReq<Void> pageReq) {
-        return this.followInformationService.followList(authUserId.getUserId(), pageReq);
+        return this.followInformationService.followList(pageReq.withData(authUserId.getUserId()));
     }
 
     /**

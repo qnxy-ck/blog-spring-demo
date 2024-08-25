@@ -25,13 +25,15 @@
             <if test="info.userAvatar != null">
                 user_avatar = #{info.userAvatar},
             </if>
-            <if test="info.gender == null">
+            <if test="info.gender != null">
                 gender = #{info.gender},
             </if>
-            <if test="info.profession == null">
+            <if test="info.profession != null">
                 profession = #{info.profession},
             </if>
-            personal_description = #{info.personalDescription}
+            <if test="info.personalDescription != null">
+                personal_description = #{info.personalDescription}
+            </if>
         </set>
         where id = #{userId}
         and deleted = false
