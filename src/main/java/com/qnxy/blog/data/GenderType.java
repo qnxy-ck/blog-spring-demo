@@ -29,10 +29,20 @@ public enum GenderType {
     private static final List<Integer> ordinalList = Arrays.stream(values())
             .map(Enum::ordinal)
             .toList();
+
+    /**
+     * 性别信息国际化编码
+     * 实际返回会转换为编码所对应的信息
+     */
     @JsonValue
     @StaticI18nCode
     private final String genderValue;
 
+    /**
+     * 根据此枚举序号反序列化
+     *
+     * @throws BizException 如果无法匹配则抛出此异常
+     */
     @JsonCreator
     public static GenderType fromGenderName(Integer genderOrdinal) {
         return Arrays.stream(values())
