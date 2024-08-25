@@ -14,7 +14,6 @@ import org.springframework.util.FileCopyUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -128,8 +127,7 @@ public class FileOperateServiceImpl implements FileOperateService, InitializingB
                 fileName
         );
 
-        final OutputStream outputStream = Files.newOutputStream(Files.createFile(path));
-        inputStream.transferTo(outputStream);
+        FileCopyUtils.copy(inputStream, Files.newOutputStream(Files.createFile(path)));
 
         // 返回文件名
         // 当前日期加生成的文件名

@@ -53,7 +53,7 @@ public class GlobalUnityResponseRAdvice implements ResponseBodyAdvice<Object> {
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
 
         try {
-            return this.objectMapper.writeValueAsBytes(privateR);
+            return this.objectMapper.writeValueAsString(privateR);
         } catch (JsonProcessingException e) {
             throw new BizException(e, CommonResultStatusCodeE.JSON_CONVERSION_EXCEPTION);
         }
