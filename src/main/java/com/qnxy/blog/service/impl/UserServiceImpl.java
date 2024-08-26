@@ -10,6 +10,7 @@ import com.qnxy.blog.core.BeanCopy;
 import com.qnxy.blog.core.BizException;
 import com.qnxy.blog.core.CommonResultStatusCodeE;
 import com.qnxy.blog.data.entity.UserInfo;
+import com.qnxy.blog.data.event.UserRegisterEvent;
 import com.qnxy.blog.data.req.auth.AuthReq;
 import com.qnxy.blog.data.req.user.RegisterInfoReq;
 import com.qnxy.blog.data.req.user.UpdateInfoReq;
@@ -17,8 +18,10 @@ import com.qnxy.blog.mapper.UserInfoMapper;
 import com.qnxy.blog.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -45,6 +48,7 @@ public class UserServiceImpl implements UserService {
     private final AuthenticationConfigurationProperties authenticationConfigurationProperties;
     private final Algorithm jwtAlgorithm;
     private final JWTVerifier jwtVerifier;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
 
     @Override
@@ -67,6 +71,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    @Transactional
     public void registerAccount(RegisterInfoReq registerInfoReq) {
         expectFalse(this.userInfoMapper.selectExistByUsername(registerInfoReq.getUsername()), ACCOUNT_NAME_ALREADY_EXISTS);
 
@@ -75,6 +80,8 @@ public class UserServiceImpl implements UserService {
         userInfo.setPassword(encodePassword);
 
         expectInsertOk(this.userInfoMapper.insertUserInfo(userInfo));
+
+        this.applicationEventPublisher.publishEvent(UserRegisterEvent.of(userInfo.getId()));
     }
 
     @Override
