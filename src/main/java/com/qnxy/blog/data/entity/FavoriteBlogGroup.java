@@ -36,6 +36,11 @@ public class FavoriteBlogGroup {
     private Boolean open;
 
     /**
+     * 是否为默认分组
+     */
+    private Boolean defaultGroup;
+
+    /**
      * 分组描述
      */
     private String description;
