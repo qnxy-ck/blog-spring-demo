@@ -39,6 +39,11 @@ public class FavoriteBlogGroupResp {
     private String description;
 
     /**
+     * 是否为默认分组
+     */
+    private Boolean defaultGroup;
+
+    /**
      * 创建时间
      */
     private LocalDateTime createdTime;
