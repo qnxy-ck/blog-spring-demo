@@ -13,6 +13,10 @@
                 #{groupParam.open},
                 #{groupParam.description})
     </insert>
+    <insert id="insertDefaultFavoriteBlogGroup">
+        insert into favorite_blog_group (user_id, name, open, default_group)
+        values (#{userId}, #{defaultName}, true, true)
+    </insert>
     <select id="selectUserIdAndNameExists" resultType="java.lang.Boolean">
         select count(*)
         from favorite_blog_group

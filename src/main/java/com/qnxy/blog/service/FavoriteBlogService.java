@@ -10,6 +10,8 @@ import com.qnxy.blog.data.resp.FavoriteBlogGroupResp;
  */
 public interface FavoriteBlogService {
 
+    String FAVORITE_BLOG_DEFAULT_GROUP_NAME = "默认分组";
+
     void addFavoriteBlogGroup(Long userId, FavoriteBolgGroupReq favoriteBolgGroupReq);
 
     /**

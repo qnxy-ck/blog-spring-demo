@@ -27,4 +27,6 @@ public interface FavoriteBlogGroupMapper {
 
 
     List<FavoriteBlogGroupResp> selectGroupListByUserId(RowBounds rowBounds, Long userId);
+
+    boolean insertDefaultFavoriteBlogGroup(Long userId, String defaultName);
 }
