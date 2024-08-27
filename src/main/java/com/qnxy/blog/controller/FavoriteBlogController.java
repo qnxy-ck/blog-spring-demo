@@ -1,4 +1,4 @@
-package com.qnxy.blog.controller.user;
+package com.qnxy.blog.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.qnxy.blog.data.CurrentAuthUserId;

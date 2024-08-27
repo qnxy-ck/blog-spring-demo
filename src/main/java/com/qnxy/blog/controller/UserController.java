@@ -1,4 +1,4 @@
-package com.qnxy.blog.controller.user;
+package com.qnxy.blog.controller;
 
 import com.qnxy.blog.core.annotations.IgnoreAuth;
 import com.qnxy.blog.data.CurrentAuthUserId;
