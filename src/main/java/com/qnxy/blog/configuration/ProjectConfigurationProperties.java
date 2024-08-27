@@ -17,6 +17,17 @@ import java.nio.file.Path;
 public class ProjectConfigurationProperties {
 
     /**
+     * 当请求接口时如果没有指定版本参数
+     * 并且该接口存在多个版本 使用高版本还是默认版本
+     * <p>
+     * 为 true 则使用最高版本
+     * 为 false 则使用低版本
+     * <p>
+     * 默认使用高版本
+     */
+    private Boolean versionControlHigh = true;
+
+    /**
      * 文件访问地址前缀
      */
     private String fileAccessAddress;
