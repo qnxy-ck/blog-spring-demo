@@ -27,7 +27,8 @@ public class FavoriteBolgGroupReq {
     /**
      * 组名
      */
-    @NotBlank(message = "收藏分组名称不能为空", groups = {Update.class, Insert.class})
+    @NotBlank(message = "收藏分组名称不能为空", groups = Insert.class)
+    @MustNotBeBlankWhenNotNull(message = "收藏分组名称不能为空", groups = Update.class)
     private String name;
 
     /**

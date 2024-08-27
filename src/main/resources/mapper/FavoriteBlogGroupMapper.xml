@@ -17,6 +17,27 @@
         insert into favorite_blog_group (user_id, name, open, default_group)
         values (#{userId}, #{defaultName}, true, true)
     </insert>
+
+    <update id="updateGroupInfo">
+        update favorite_blog_group
+        <set>
+            <if test="info.cover != null">
+                cover = #{info.cover},
+            </if>
+            <if test="info.name != null">
+                name = #{info.name},
+            </if>
+            <if test="info.name != null">
+                open = #{info.open},
+            </if>
+            <if test="info.description != null">
+                description = #{info.description}
+            </if>
+        </set>
+        where id = #{info.groupId}
+        and user_id = #{userId}
+
+    </update>
     <select id="selectUserIdAndNameExists" resultType="java.lang.Boolean">
         select count(*)
         from favorite_blog_group
@@ -36,6 +57,17 @@
                  left join favorite_blog fb on fbg.id = fb.group_id
         where user_id = 19
         group by fbg.id
+    </select>
+    <select id="selectGroupById" resultType="com.qnxy.blog.data.entity.FavoriteBlogGroup">
+        select *
+        from favorite_blog_group
+        where id = #{groupId}
+    </select>
+    <select id="selectDefaultGroupByUserId" resultType="com.qnxy.blog.data.entity.FavoriteBlogGroup">
+        select *
+        from favorite_blog_group
+        where user_id = #{userId}
+          and default_group = true
     </select>
 
 </mapper>

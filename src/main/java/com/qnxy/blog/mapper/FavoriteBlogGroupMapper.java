@@ -1,8 +1,10 @@
 package com.qnxy.blog.mapper;
 
+import com.qnxy.blog.data.entity.FavoriteBlogGroup;
 import com.qnxy.blog.data.req.user.FavoriteBolgGroupReq;
 import com.qnxy.blog.data.resp.FavoriteBlogGroupResp;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
 import java.util.List;
@@ -29,4 +31,13 @@ public interface FavoriteBlogGroupMapper {
     List<FavoriteBlogGroupResp> selectGroupListByUserId(RowBounds rowBounds, Long userId);
 
     boolean insertDefaultFavoriteBlogGroup(Long userId, String defaultName);
+
+    long updateGroupInfo(Long userId, @Param("info") FavoriteBolgGroupReq favoriteBolgGroupReq);
+
+    FavoriteBlogGroup selectGroupById(Long groupId);
+
+    /**
+     * 查询某个用户的默认分组
+     */
+    FavoriteBlogGroup selectDefaultGroupByUserId(Long userId);
 }

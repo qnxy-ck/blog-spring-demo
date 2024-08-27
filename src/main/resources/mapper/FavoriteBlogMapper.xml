@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qnxy.blog.mapper.FavoriteBlogMapper">
+    <update id="updateGroupIdByUserId">
+        update favorite_blog
+        set group_id = #{targetGroupId}
+        where group_id = #{groupId}
+    </update>
+    <delete id="deleteDuplicateBlogIdByGroupId">
+        delete
+        from favorite_blog
+        where id not in (select m.minId
+                         from (select min(created_time) minId
+                               from favorite_blog
+                               where group_id = #{groupId}
+                               group by blog_id) m)
+          and group_id = #{groupId}
+    </delete>
+
+</mapper>
