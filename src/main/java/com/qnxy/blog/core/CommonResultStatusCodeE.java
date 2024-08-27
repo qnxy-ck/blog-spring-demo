@@ -87,6 +87,11 @@ public enum CommonResultStatusCodeE implements ResultStatusCode {
      */
     UNSUPPORTED_REQUEST_METHOD("C00015"),
 
+    /**
+     * 非法的版本格式: [{0}]
+     */
+    ILLEGAL_VERSION_FORMAT("C00016"),
+    
     ;
 
     private final String code;
