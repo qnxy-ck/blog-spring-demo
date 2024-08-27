@@ -43,6 +43,13 @@ public enum BizResultStatusCodeE implements ResultStatusCode {
      */
     GROUP_NAME_ALREADY_EXISTS("B00005"),
 
+    /**
+     * 默认分组无法修改
+     */
+    DEFAULT_GROUPING_CANNOT_BE_MODIFIED("B00006"),
+    
+    
+
 
     ;
     private final String code;

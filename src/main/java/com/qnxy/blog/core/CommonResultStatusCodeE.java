@@ -91,6 +91,13 @@ public enum CommonResultStatusCodeE implements ResultStatusCode {
      * 非法的版本格式: [{0}]
      */
     ILLEGAL_VERSION_FORMAT("C00016"),
+
+    /**
+     * 待修改数据不存在: [{0}]
+     */
+    DATA_TO_BE_MODIFIED_DOES_NOT_EXIST("C00017"),
+    
+    
     
     ;
 
