@@ -47,6 +47,11 @@ public enum BizResultStatusCodeE implements ResultStatusCode {
      * 默认分组无法修改
      */
     DEFAULT_GROUPING_CANNOT_BE_MODIFIED("B00006"),
+
+    /**
+     * 不存在该分组信息
+     */
+    GROUP_INFORMATION_DOES_NOT_EXIST("B00007"),
     
     
 
