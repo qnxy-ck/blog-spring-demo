@@ -2,6 +2,7 @@ package com.qnxy.blog.service;
 
 import com.github.pagehelper.PageInfo;
 import com.qnxy.blog.data.PageReq;
+import com.qnxy.blog.data.req.AddFavoriteBlogReq;
 import com.qnxy.blog.data.req.FavoriteBolgGroupReq;
 import com.qnxy.blog.data.resp.FavoriteBlogGroupResp;
 
@@ -40,4 +41,21 @@ public interface FavoriteBlogService {
      * @param userId 当前用户ID
      */
     void deleteGroup(Long id, Long userId);
+
+    /**
+     * 增加博客到收藏
+     *
+     * @param userId             当前用户ID
+     * @param addFavoriteBlogReq 待收藏相关信息
+     */
+    void favoriteBlog(Long userId, AddFavoriteBlogReq addFavoriteBlogReq);
+
+    /**
+     * 删除某个分组下收藏的博客
+     *
+     * @param id     删除那个数据
+     * @param userId 当前用户ID
+     */
+    void removeFavoriteBlog(Long id, Long userId);
+
 }

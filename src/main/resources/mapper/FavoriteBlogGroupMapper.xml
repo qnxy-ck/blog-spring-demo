@@ -69,5 +69,11 @@
         where user_id = #{userId}
           and default_group = true
     </select>
+    <select id="selectGroupByIdAndUserId" resultType="com.qnxy.blog.data.entity.FavoriteBlogGroup">
+        select *
+        from favorite_blog_group
+        where user_id = #{userId}
+          and id = #{groupId}
+    </select>
 
 </mapper>

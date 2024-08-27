@@ -2,8 +2,10 @@ package com.qnxy.blog.service.impl;
 
 import com.github.pagehelper.PageInfo;
 import com.qnxy.blog.data.PageReq;
+import com.qnxy.blog.data.entity.FavoriteBlog;
 import com.qnxy.blog.data.entity.FavoriteBlogGroup;
 import com.qnxy.blog.data.event.UserRegisterEvent;
+import com.qnxy.blog.data.req.AddFavoriteBlogReq;
 import com.qnxy.blog.data.req.FavoriteBolgGroupReq;
 import com.qnxy.blog.data.resp.FavoriteBlogGroupResp;
 import com.qnxy.blog.mapper.FavoriteBlogGroupMapper;
@@ -18,10 +20,10 @@ import org.springframework.transaction.event.TransactionalEventListener;
 import java.util.Objects;
 import java.util.stream.Stream;
 
+import static com.qnxy.blog.core.CommonResultStatusCodeE.DATA_DELETION_FAILED;
 import static com.qnxy.blog.core.CommonResultStatusCodeE.DATA_TO_BE_MODIFIED_DOES_NOT_EXIST;
 import static com.qnxy.blog.core.VerificationExpectations.*;
-import static com.qnxy.blog.core.enums.BizResultStatusCodeE.DEFAULT_GROUPING_CANNOT_BE_MODIFIED;
-import static com.qnxy.blog.core.enums.BizResultStatusCodeE.GROUP_NAME_ALREADY_EXISTS;
+import static com.qnxy.blog.core.enums.BizResultStatusCodeE.*;
 
 /**
  * @author Qnxy
@@ -95,6 +97,34 @@ public class FavoriteBlogServiceImpl implements FavoriteBlogService {
         // 删除该分组下重复的博客ID
         this.favoriteBlogMapper.deleteDuplicateBlogIdByGroupId(defaultGroup.getId());
 
+    }
+
+    @Override
+    public void favoriteBlog(Long userId, AddFavoriteBlogReq addFavoriteBlogReq) {
+        final FavoriteBlogGroup favoriteBlogGroup;
+        if (addFavoriteBlogReq.getGroupId() == null) {
+            // 如果没有传递需要收藏的分组ID
+            // 则使用默认分组ID
+            favoriteBlogGroup = this.favoriteBlogGroupMapper.selectDefaultGroupByUserId(userId);
+        } else {
+            // 如果传递了分组ID
+            // 则判断该ID是否有效
+            favoriteBlogGroup = expectNonNull(this.favoriteBlogGroupMapper.selectGroupById(addFavoriteBlogReq.getGroupId()), GROUP_INFORMATION_DOES_NOT_EXIST);
+        }
+
+        // 是否考虑校验博客ID是否可用?
+        final Long groupId = favoriteBlogGroup.getId();
+        expectInsertOk(this.favoriteBlogMapper.insertFavoriteBolg(groupId, addFavoriteBlogReq.getBlogId()));
+    }
+
+    @Override
+    public void removeFavoriteBlog(Long id, Long userId) {
+        final FavoriteBlog favoriteBlog = expectNonNull(this.favoriteBlogMapper.selectById(id), DATA_TO_BE_MODIFIED_DOES_NOT_EXIST);
+
+        // 如果未查询到该用户下的分组, 则删除失败
+        expectNonNull(this.favoriteBlogGroupMapper.selectGroupByIdAndUserId(favoriteBlog.getGroupId(), userId), DATA_DELETION_FAILED);
+        
+        expectDeleteOk(this.favoriteBlogMapper.deleteById(id));
     }
 
     /**

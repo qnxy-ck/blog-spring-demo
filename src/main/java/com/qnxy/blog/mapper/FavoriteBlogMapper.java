@@ -1,5 +1,6 @@
 package com.qnxy.blog.mapper;
 
+import com.qnxy.blog.data.entity.FavoriteBlog;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -23,5 +24,18 @@ public interface FavoriteBlogMapper {
      * @param groupId 分组ID
      */
     void deleteDuplicateBlogIdByGroupId(Long groupId);
+
+    /**
+     * 添加博客到指定收藏组
+     *
+     * @param groupId 收藏组ID
+     * @param blogId  博客ID
+     * @return .
+     */
+    long insertFavoriteBolg(Long groupId, Long blogId);
+
+    FavoriteBlog selectById(Long id);
+
+    long deleteById(Long id);
 
 }

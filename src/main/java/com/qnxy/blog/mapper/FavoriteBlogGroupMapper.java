@@ -40,4 +40,7 @@ public interface FavoriteBlogGroupMapper {
      * 查询某个用户的默认分组
      */
     FavoriteBlogGroup selectDefaultGroupByUserId(Long userId);
+
+    FavoriteBlogGroup selectGroupByIdAndUserId(Long groupId, Long userId);
+
 }

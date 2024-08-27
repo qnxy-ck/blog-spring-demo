@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.qnxy.blog.mapper.FavoriteBlogMapper">
+    <insert id="insertFavoriteBolg">
+        insert into favorite_blog (group_id, blog_id)
+        values (#{groupId}, #{blogId})
+    </insert>
     <update id="updateGroupIdByUserId">
         update favorite_blog
         set group_id = #{targetGroupId}
@@ -16,5 +20,15 @@
                                group by blog_id) m)
           and group_id = #{groupId}
     </delete>
+    <delete id="deleteById">
+        delete
+        from favorite_blog
+        where id = #{id}
+    </delete>
+    <select id="selectById" resultType="com.qnxy.blog.data.entity.FavoriteBlog">
+        select *
+        from favorite_blog
+        where id = #{id}
+    </select>
 
 </mapper>

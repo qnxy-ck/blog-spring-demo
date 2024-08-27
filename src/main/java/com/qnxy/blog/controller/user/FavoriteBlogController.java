@@ -3,6 +3,7 @@ package com.qnxy.blog.controller.user;
 import com.github.pagehelper.PageInfo;
 import com.qnxy.blog.data.CurrentAuthUserId;
 import com.qnxy.blog.data.PageReq;
+import com.qnxy.blog.data.req.AddFavoriteBlogReq;
 import com.qnxy.blog.data.req.FavoriteBolgGroupReq;
 import com.qnxy.blog.data.resp.FavoriteBlogGroupResp;
 import com.qnxy.blog.service.FavoriteBlogService;
@@ -70,5 +71,29 @@ public class FavoriteBlogController {
         this.favoriteBlogService.deleteGroup(id, authUserId.getUserId());
     }
 
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * 增加博客到收藏
+     *
+     * @param addFavoriteBlogReq 待收藏相关信息
+     * @param authUserId         当前用户ID
+     */
+    @PostMapping
+    public void favoriteBlog(@RequestBody @Validated(Insert.class) AddFavoriteBlogReq addFavoriteBlogReq, CurrentAuthUserId authUserId) {
+        this.favoriteBlogService.favoriteBlog(authUserId.getUserId(), addFavoriteBlogReq);
+    }
+
+    /**
+     * 删除某个分组下收藏的博客
+     *
+     * @param authUserId 当前用户ID
+     * @param id         删除那个数据
+     */
+    @DeleteMapping("/{id}")
+    public void removeFavoriteBlog(CurrentAuthUserId authUserId, @PathVariable Long id) {
+        this.favoriteBlogService.removeFavoriteBlog(id, authUserId.getUserId());
+    }
 
 }
