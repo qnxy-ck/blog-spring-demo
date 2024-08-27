@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qnxy.blog.mapper.BlogTagMapper">
+    <insert id="insertBlogTag">
+        insert into blog_tag(user_id, tag_name)
+        values (#{userId}, #{tagName})
+    </insert>
+    <update id="updateByUserIdAndId">
+        update blog_tags
+        set tag_name = #{tagName}
+        where id = #{id}
+          and user_id = #{userId}
+    </update>
+    <delete id="deleteByUserIdAndId">
+        delete
+        from blog_tags
+        where id = #{id}
+          and user_id = #{userId}
+    </delete>
+    <select id="selectTagInfoByUserId" resultType="com.qnxy.blog.data.resp.BlogTagResp">
+        select id, tag_name, created_time
+        from blog_tags
+        where user_id = #{userId}
+    </select>
+</mapper>
