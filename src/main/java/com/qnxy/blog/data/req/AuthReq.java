@@ -1,4 +1,4 @@
-package com.qnxy.blog.data.req.auth;
+package com.qnxy.blog.data.req;
 
 import lombok.Data;
 

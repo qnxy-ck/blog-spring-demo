@@ -1,7 +1,7 @@
 package com.qnxy.blog.mapper;
 
 import com.qnxy.blog.data.entity.FavoriteBlogGroup;
-import com.qnxy.blog.data.req.user.FavoriteBolgGroupReq;
+import com.qnxy.blog.data.req.FavoriteBolgGroupReq;
 import com.qnxy.blog.data.resp.FavoriteBlogGroupResp;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

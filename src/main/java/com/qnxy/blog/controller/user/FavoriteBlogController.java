@@ -3,7 +3,7 @@ package com.qnxy.blog.controller.user;
 import com.github.pagehelper.PageInfo;
 import com.qnxy.blog.data.CurrentAuthUserId;
 import com.qnxy.blog.data.PageReq;
-import com.qnxy.blog.data.req.user.FavoriteBolgGroupReq;
+import com.qnxy.blog.data.req.FavoriteBolgGroupReq;
 import com.qnxy.blog.data.resp.FavoriteBlogGroupResp;
 import com.qnxy.blog.service.FavoriteBlogService;
 import lombok.RequiredArgsConstructor;

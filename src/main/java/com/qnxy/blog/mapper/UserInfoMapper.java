@@ -1,7 +1,7 @@
 package com.qnxy.blog.mapper;
 
 import com.qnxy.blog.data.entity.UserInfo;
-import com.qnxy.blog.data.req.user.UpdateInfoReq;
+import com.qnxy.blog.data.req.UpdateInfoReq;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

@@ -2,9 +2,9 @@ package com.qnxy.blog.controller.user;
 
 import com.qnxy.blog.core.annotations.IgnoreAuth;
 import com.qnxy.blog.data.CurrentAuthUserId;
-import com.qnxy.blog.data.req.auth.AuthReq;
-import com.qnxy.blog.data.req.user.RegisterInfoReq;
-import com.qnxy.blog.data.req.user.UpdateInfoReq;
+import com.qnxy.blog.data.req.AuthReq;
+import com.qnxy.blog.data.req.RegisterInfoReq;
+import com.qnxy.blog.data.req.UpdateInfoReq;
 import com.qnxy.blog.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;

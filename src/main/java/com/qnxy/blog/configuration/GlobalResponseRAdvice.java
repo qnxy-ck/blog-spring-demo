@@ -26,7 +26,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 @SuppressWarnings("NullableProblems")
 @RestControllerAdvice
 @RequiredArgsConstructor
-public class GlobalUnityResponseRAdvice implements ResponseBodyAdvice<Object> {
+public class GlobalResponseRAdvice implements ResponseBodyAdvice<Object> {
 
     private final ObjectMapper objectMapper;
     private final MessageSource messageSource;

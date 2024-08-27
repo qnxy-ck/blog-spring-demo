@@ -1,4 +1,4 @@
-package com.qnxy.blog.data.req.user;
+package com.qnxy.blog.data.req;
 
 import com.qnxy.blog.core.annotations.FieldValueEqualityCheck;
 import com.qnxy.blog.data.GenderType;

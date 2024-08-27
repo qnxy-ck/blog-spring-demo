@@ -1,4 +1,4 @@
-package com.qnxy.blog.data.req.user;
+package com.qnxy.blog.data.req;
 
 import com.qnxy.blog.core.annotations.MustNotBeBlankWhenNotNull;
 import com.qnxy.blog.data.GenderType;

@@ -2,7 +2,7 @@ package com.qnxy.blog.service;
 
 import com.github.pagehelper.PageInfo;
 import com.qnxy.blog.data.PageReq;
-import com.qnxy.blog.data.req.user.FavoriteBolgGroupReq;
+import com.qnxy.blog.data.req.FavoriteBolgGroupReq;
 import com.qnxy.blog.data.resp.FavoriteBlogGroupResp;
 
 /**

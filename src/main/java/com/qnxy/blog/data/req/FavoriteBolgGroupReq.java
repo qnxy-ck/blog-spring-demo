@@ -1,4 +1,4 @@
-package com.qnxy.blog.data.req.user;
+package com.qnxy.blog.data.req;
 
 import com.qnxy.blog.core.annotations.MustNotBeBlankWhenNotNull;
 import jakarta.validation.constraints.NotBlank;
