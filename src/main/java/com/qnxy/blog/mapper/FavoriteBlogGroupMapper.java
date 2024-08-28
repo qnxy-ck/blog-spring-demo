@@ -43,4 +43,6 @@ public interface FavoriteBlogGroupMapper {
 
     FavoriteBlogGroup selectGroupByIdAndUserId(Long groupId, Long userId);
 
+    void deleteById(Long id);
+    
 }

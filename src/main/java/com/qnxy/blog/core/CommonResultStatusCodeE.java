@@ -93,7 +93,7 @@ public enum CommonResultStatusCodeE implements ResultStatusCode {
     ILLEGAL_VERSION_FORMAT("C00016"),
 
     /**
-     * 待修改数据不存在: [{0}]
+     * 待修改数据不存在
      */
     DATA_TO_BE_MODIFIED_DOES_NOT_EXIST("C00017"),
     

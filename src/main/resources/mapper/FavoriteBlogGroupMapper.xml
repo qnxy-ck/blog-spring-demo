@@ -27,7 +27,7 @@
             <if test="info.name != null">
                 name = #{info.name},
             </if>
-            <if test="info.name != null">
+            <if test="info.open != null">
                 open = #{info.open},
             </if>
             <if test="info.description != null">
@@ -38,6 +38,11 @@
         and user_id = #{userId}
 
     </update>
+    <delete id="deleteById">
+        delete
+        from favorite_blog_group
+        where id = #{id}
+    </delete>
     <select id="selectUserIdAndNameExists" resultType="java.lang.Boolean">
         select count(*)
         from favorite_blog_group
@@ -55,7 +60,7 @@
                count(fb.id) blogCount
         from favorite_blog_group fbg
                  left join favorite_blog fb on fbg.id = fb.group_id
-        where user_id = 19
+        where user_id = #{userId}
         group by fbg.id
     </select>
     <select id="selectGroupById" resultType="com.qnxy.blog.data.entity.FavoriteBlogGroup">

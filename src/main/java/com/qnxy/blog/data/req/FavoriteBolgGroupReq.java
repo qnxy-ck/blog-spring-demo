@@ -21,7 +21,7 @@ public class FavoriteBolgGroupReq {
     /**
      * 分组封面
      */
-    @MustNotBeBlankWhenNotNull(message = "封面不能为空字符", groups = Update.class)
+    @MustNotBeBlankWhenNotNull(message = "封面不能为空字符", groups = {Update.class, Insert.class})
     private String cover;
 
     /**

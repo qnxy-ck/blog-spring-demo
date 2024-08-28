@@ -11,14 +11,15 @@
         where group_id = #{groupId}
     </update>
     <delete id="deleteDuplicateBlogIdByGroupId">
+        with queryRanded as (select id,
+                                    row_number() over (partition by blog_id order by created_time) rn
+                             from favorite_blog
+                             where group_id = #{groupId})
         delete
         from favorite_blog
-        where id not in (select m.minId
-                         from (select min(created_time) minId
-                               from favorite_blog
-                               where group_id = #{groupId}
-                               group by blog_id) m)
-          and group_id = #{groupId}
+        where id in (select id
+                     from queryRanded
+                     where rn > 1)
     </delete>
     <delete id="deleteById">
         delete

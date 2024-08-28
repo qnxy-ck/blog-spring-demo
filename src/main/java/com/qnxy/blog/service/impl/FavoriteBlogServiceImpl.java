@@ -54,7 +54,7 @@ public class FavoriteBlogServiceImpl implements FavoriteBlogService {
     public void updateGroupInfo(Long userId, FavoriteBolgGroupReq favoriteBolgGroupReq) {
         final FavoriteBlogGroup favoriteBlogGroup = expectNonNull(this.favoriteBlogGroupMapper.selectGroupById(favoriteBolgGroupReq.getGroupId()), DATA_TO_BE_MODIFIED_DOES_NOT_EXIST);
         // 检查是否为默认分组. 默认分组无法修改名称
-        expectFalse(favoriteBlogGroup.getDefaultGroup() && favoriteBlogGroup.getName() == null, DEFAULT_GROUPING_CANNOT_BE_MODIFIED);
+        expectFalse(favoriteBlogGroup.getDefaultGroup() && favoriteBolgGroupReq.getName() != null, DEFAULT_GROUPING_CANNOT_BE_MODIFIED);
 
         if (Stream.of(favoriteBolgGroupReq.getName(),
                         favoriteBolgGroupReq.getCover(),
@@ -94,9 +94,10 @@ public class FavoriteBlogServiceImpl implements FavoriteBlogService {
 
         // 将待删除分组ID修改为默认分组ID
         this.favoriteBlogMapper.updateGroupIdByUserId(favoriteBlogGroup.getId(), defaultGroup.getId());
-        // 删除该分组下重复的博客ID
+        // 删除该分组下重复的博客ID, 保留收藏时间最久的一条
         this.favoriteBlogMapper.deleteDuplicateBlogIdByGroupId(defaultGroup.getId());
-
+        // 删除分组
+        this.favoriteBlogGroupMapper.deleteById(id);
     }
 
     @Override
