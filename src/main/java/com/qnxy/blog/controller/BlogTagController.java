@@ -69,7 +69,7 @@ public class BlogTagController {
      * @param id         标签id
      * @param authUserId 当前用户id
      */
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public void deleteTag(@PathVariable Long id, CurrentAuthUserId authUserId) {
         this.blogTagService.deleteTagById(id, authUserId.getUserId());
     }
