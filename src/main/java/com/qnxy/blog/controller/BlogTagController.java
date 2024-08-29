@@ -56,7 +56,7 @@ public class BlogTagController {
 
 
     /**
-     * 根据当前用户id查询标签嘻嘻嘻
+     * 根据当前用户id查询标签信息
      */
     @GetMapping
     public List<BlogTagResp> tagList(CurrentAuthUserId authUserId) {

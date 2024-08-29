@@ -51,6 +51,7 @@ public class BlogInfoServiceImpl implements BlogInfoService {
     }
 
     @Override
+    @Transactional
     public void starsBlog(String blogId, Long userId) {
         // 增加博客信息中的点赞数量
         expectUpdateOk(this.blogInfoMapper.updateStarsBlogCount(blogId, userId, true));
