@@ -3,6 +3,8 @@ package com.qnxy.blog.service.impl;
 import com.qnxy.blog.core.BeanCopy;
 import com.qnxy.blog.data.entity.BlogInfo;
 import com.qnxy.blog.data.req.AddBlogReq;
+import com.qnxy.blog.data.resp.BlogInfoResp;
+import com.qnxy.blog.data.resp.BlogTagResp;
 import com.qnxy.blog.mapper.BlogInfoMapper;
 import com.qnxy.blog.mapper.BlogTagMapper;
 import com.qnxy.blog.mapper.StarsBlogRecordMapper;
@@ -14,8 +16,8 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
-import static com.qnxy.blog.core.VerificationExpectations.expectInsertOk;
-import static com.qnxy.blog.core.VerificationExpectations.expectUpdateOk;
+import static com.qnxy.blog.core.VerificationExpectations.*;
+import static com.qnxy.blog.core.enums.BizResultStatusCodeE.BLOG_INFORMATION_DOES_NOT_EXIST;
 
 /**
  * @author Qnxy
@@ -56,5 +58,20 @@ public class BlogInfoServiceImpl implements BlogInfoService {
         // 增加点赞记录
         expectInsertOk(this.starsBlogRecordMapper.insertStarsRecord(blogId, userId));
 
+    }
+
+    @Override
+    @Transactional
+    public BlogInfoResp readBlog(Long blogId) {
+        final BlogInfoResp blogInfoResp = expectNonNull(this.blogInfoMapper.selectBlogInfo(blogId), BLOG_INFORMATION_DOES_NOT_EXIST);
+
+        // 查询该博客的标签信息
+        final List<BlogTagResp> tagRespList = this.blogTagMapper.selectTagsByBlogId(blogId);
+        blogInfoResp.setTagList(tagRespList);
+
+        // 增加阅读量
+        this.blogInfoMapper.updateReadCount(blogId);
+        
+        return blogInfoResp;
     }
 }

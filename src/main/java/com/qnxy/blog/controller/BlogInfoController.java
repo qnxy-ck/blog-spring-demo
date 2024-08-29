@@ -2,6 +2,7 @@ package com.qnxy.blog.controller;
 
 import com.qnxy.blog.data.CurrentAuthUserId;
 import com.qnxy.blog.data.req.AddBlogReq;
+import com.qnxy.blog.data.resp.BlogInfoResp;
 import com.qnxy.blog.service.BlogInfoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -40,6 +41,17 @@ public class BlogInfoController {
     @PutMapping("/stars/{blogId}")
     public void starsBlog(@PathVariable String blogId, CurrentAuthUserId authUserId) {
         this.blogInfoService.starsBlog(blogId, authUserId.getUserId());
+    }
+
+
+    /**
+     * 查询博客信息
+     *
+     * @param blogId 博客id
+     */
+    @GetMapping("/{blogId}")
+    public BlogInfoResp readBlog(@PathVariable Long blogId) {
+        return this.blogInfoService.readBlog(blogId);
     }
 
 

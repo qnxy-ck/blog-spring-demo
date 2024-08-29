@@ -22,4 +22,23 @@
         where id = #{blogId}
         and user_id = #{userId}
     </update>
+    <update id="updateReadCount">
+        update blog_info
+        set reads_count = reads_count + 1
+        where id = #{blogId}
+    </update>
+    <select id="selectBlogInfo" resultType="com.qnxy.blog.data.resp.BlogInfoResp">
+        select bi.id blogId,
+               bi.title,
+               bi.content,
+               ui.id userId,
+               ui.username,
+               bi.stars_count,
+               bi.collections_count,
+               bi.reads_count,
+               bi.created_time
+        from blog_info bi
+                 left join user_info ui on bi.user_id = ui.id
+        where bi.id = #{blogId}
+    </select>
 </mapper>

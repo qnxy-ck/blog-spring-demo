@@ -29,4 +29,6 @@ public interface BlogTagMapper {
      */
     long insertBlogTagAssociation(Long blogId, List<Long> tagIdList);
 
+    List<BlogTagResp> selectTagsByBlogId(Long blogId);
+    
 }

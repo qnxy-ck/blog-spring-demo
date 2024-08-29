@@ -1,6 +1,7 @@
 package com.qnxy.blog.mapper;
 
 import com.qnxy.blog.data.entity.BlogInfo;
+import com.qnxy.blog.data.resp.BlogInfoResp;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -19,4 +20,8 @@ public interface BlogInfoMapper {
      */
     long updateStarsBlogCount(String blogId, Long userId, boolean isAdd);
 
+    BlogInfoResp selectBlogInfo(Long blogId);
+
+    void updateReadCount(Long blogId);
+    
 }
