@@ -52,6 +52,11 @@ public enum BizResultStatusCodeE implements ResultStatusCode {
      * 不存在该分组信息
      */
     GROUP_INFORMATION_DOES_NOT_EXIST("B00007"),
+
+    /**
+     * 博客信息不存在
+     */
+    BLOG_INFORMATION_DOES_NOT_EXIST("B00008"),
     
     
 
