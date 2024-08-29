@@ -38,4 +38,6 @@ public interface FavoriteBlogMapper {
 
     long deleteById(Long id);
 
+    boolean selectAlreadyCollected(Long blogId, Long userId);
+    
 }

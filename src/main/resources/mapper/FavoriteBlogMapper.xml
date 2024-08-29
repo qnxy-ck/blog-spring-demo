@@ -31,5 +31,13 @@
         from favorite_blog
         where id = #{id}
     </select>
+    <select id="selectAlreadyCollected" resultType="java.lang.Boolean">
+        select count(blog_id)
+        from favorite_blog_group fbg
+                 left join favorite_blog fb on fb.group_id = fbg.id
+        where blog_id = #{blogId}
+          and fbg.user_id = #{userId}
+        group by blog_id
+    </select>
 
 </mapper>

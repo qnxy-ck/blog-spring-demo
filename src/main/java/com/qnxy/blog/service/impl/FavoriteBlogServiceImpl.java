@@ -8,6 +8,7 @@ import com.qnxy.blog.data.event.UserRegisterEvent;
 import com.qnxy.blog.data.req.AddFavoriteBlogReq;
 import com.qnxy.blog.data.req.FavoriteBolgGroupReq;
 import com.qnxy.blog.data.resp.FavoriteBlogGroupResp;
+import com.qnxy.blog.mapper.BlogInfoMapper;
 import com.qnxy.blog.mapper.FavoriteBlogGroupMapper;
 import com.qnxy.blog.mapper.FavoriteBlogMapper;
 import com.qnxy.blog.service.FavoriteBlogService;
@@ -35,6 +36,7 @@ public class FavoriteBlogServiceImpl implements FavoriteBlogService {
 
     private final FavoriteBlogGroupMapper favoriteBlogGroupMapper;
     private final FavoriteBlogMapper favoriteBlogMapper;
+    private final BlogInfoMapper blogInfoMapper;
 
     @Override
     public void addFavoriteBlogGroup(Long userId, FavoriteBolgGroupReq favoriteBolgGroupReq) {
@@ -116,6 +118,26 @@ public class FavoriteBlogServiceImpl implements FavoriteBlogService {
         // 是否考虑校验博客ID是否可用?
         final Long groupId = favoriteBlogGroup.getId();
         expectInsertOk(this.favoriteBlogMapper.insertFavoriteBolg(groupId, addFavoriteBlogReq.getBlogId()));
+
+        
+        if (!alreadyCollected(addFavoriteBlogReq.getBlogId(), userId)) {
+            // 增加收藏数量
+            this.blogInfoMapper.updateCollectionsCount(addFavoriteBlogReq.getBlogId());
+        }
+    }
+
+    /**
+     * 查询是否已经收藏了
+     * 一个用户存在多个分组
+     * 一篇博客可以分别收藏在不同的分组中
+     * 如果该用户任何分组中收藏了这篇博客则判定为收藏了
+     *
+     * @param blogId 博客id
+     * @param userId 那个用户
+     * @return 收藏了返回 true
+     */
+    private boolean alreadyCollected(Long blogId, Long userId) {
+        return this.favoriteBlogMapper.selectAlreadyCollected(blogId, userId);
     }
 
     @Override
@@ -124,7 +146,7 @@ public class FavoriteBlogServiceImpl implements FavoriteBlogService {
 
         // 如果未查询到该用户下的分组, 则删除失败
         expectNonNull(this.favoriteBlogGroupMapper.selectGroupByIdAndUserId(favoriteBlog.getGroupId(), userId), DATA_DELETION_FAILED);
-        
+
         expectDeleteOk(this.favoriteBlogMapper.deleteById(id));
     }
 

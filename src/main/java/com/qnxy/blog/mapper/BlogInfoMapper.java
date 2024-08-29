@@ -23,5 +23,7 @@ public interface BlogInfoMapper {
     BlogInfoResp selectBlogInfo(Long blogId);
 
     void updateReadCount(Long blogId);
-    
+
+    void updateCollectionsCount(Long blogId);
+
 }
