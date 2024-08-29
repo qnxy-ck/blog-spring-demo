@@ -1,5 +1,6 @@
 package com.qnxy.blog.controller;
 
+import com.qnxy.blog.core.annotations.IgnoreAuth;
 import com.qnxy.blog.data.CurrentAuthUserId;
 import com.qnxy.blog.data.req.AddBlogReq;
 import com.qnxy.blog.data.resp.BlogInfoResp;
@@ -49,6 +50,7 @@ public class BlogInfoController {
      *
      * @param blogId 博客id
      */
+    @IgnoreAuth
     @GetMapping("/{blogId}")
     public BlogInfoResp readBlog(@PathVariable Long blogId) {
         return this.blogInfoService.readBlog(blogId);
