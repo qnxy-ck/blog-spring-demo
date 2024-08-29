@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qnxy.blog.mapper.BlogInfoMapper">
+    <insert id="insertBlogInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into blog_info(user_id, title, content)
+        values (#{blogInfo.userId},
+                #{blogInfo.title},
+                #{blogInfo.content})
+    </insert>
+    <update id="updateStarsBlogCount">
+        update blog_info
+        <set>
+            <choose>
+                <when test="isAdd">
+                    starts_count = starts_count + 1
+                </when>
+                <otherwise>
+                    starts_count = starts_count - 1
+                </otherwise>
+            </choose>
+        </set>
+        where id = #{blogId}
+        and user_id = #{userId}
+    </update>
+</mapper>

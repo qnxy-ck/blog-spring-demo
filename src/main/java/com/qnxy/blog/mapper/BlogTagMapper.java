@@ -20,4 +20,13 @@ public interface BlogTagMapper {
 
     long deleteByUserIdAndId(Long id, Long userId);
 
+    /**
+     * 添加博客和标签的对应关系
+     *
+     * @param blogId    博客id
+     * @param tagIdList 博客标签信息
+     * @return .
+     */
+    long insertBlogTagAssociation(Long blogId, List<Long> tagIdList);
+
 }
